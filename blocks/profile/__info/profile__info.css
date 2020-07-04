@@ -1,0 +1,8 @@
+.profile__info {
+  display: grid;
+  grid-template-columns: 1fr 24px;
+  grid-template-areas: 
+  "grid_name grid_edit-btn"
+  "grid_bio .";
+  gap: 16px 17px;
+}
