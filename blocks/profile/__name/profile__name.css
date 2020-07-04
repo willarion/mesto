@@ -5,3 +5,9 @@
   margin: 0;
   grid-area: grid_name;
 }
+
+@media screen and (max-width: 600px) {
+  .profile__name {
+    font-size: 27px;
+  }
+}

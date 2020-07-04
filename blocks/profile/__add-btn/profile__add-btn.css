@@ -7,3 +7,9 @@
   background-color: #000;
   border: 1px solid #fff;
 }
+
+@media screen and (max-width: 760px) {
+  .profile__add-btn {
+    width: 268px;
+  }
+}

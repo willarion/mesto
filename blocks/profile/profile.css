@@ -12,3 +12,15 @@
   margin-bottom: 50px;
   justify-content: space-between;
 }
+
+@media screen and (max-width: 760px) {
+  .profile {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .profile {
+    margin-bottom: 36px;
+  }
+}
