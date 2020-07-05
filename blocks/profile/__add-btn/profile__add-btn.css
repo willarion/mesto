@@ -13,3 +13,10 @@
     width: 268px;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .profile__add-btn {
+    width: calc(100% - 38px);
+  }
+}
+
