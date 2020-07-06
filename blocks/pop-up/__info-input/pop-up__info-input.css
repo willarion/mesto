@@ -1,0 +1,11 @@
+.pop-up__info-input {
+  border: none;
+  margin: 0 0 48px;
+  padding: 0;
+}
+
+@media screen and (max-width: 450px) {
+  .pop-up__info-input {
+    margin-bottom: 34px;
+  }
+}
