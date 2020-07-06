@@ -6,6 +6,12 @@
   background-repeat: no-repeat;
   background-color: #000;
   border: 1px solid #fff;
+  transition: 0.3s 0s opacity ease-in;
+}
+
+.profile__add-btn:hover {
+  opacity: 0.6;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 760px) {

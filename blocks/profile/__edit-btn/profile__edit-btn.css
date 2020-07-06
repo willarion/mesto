@@ -9,6 +9,12 @@
   border: none;
   grid-area: grid_edit-btn;
   align-self: center;
+  transition: 0.3s 0s opacity ease-in;
+}
+
+.profile__edit-btn:hover {
+  opacity: 0.6;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 600px) {
