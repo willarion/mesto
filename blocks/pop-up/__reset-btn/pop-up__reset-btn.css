@@ -2,7 +2,7 @@
   position: absolute;
   right: 0;
   top: 0;
-  background-image: url(../../../images/close-icon.svg);
+  background-image: url(../../../images/close-btn.svg);
   background-size: cover;
   transform: translate(80%, -80%);
   width: 40px;
