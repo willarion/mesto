@@ -5,4 +5,13 @@
   background-repeat: no-repeat;
   width: 21px;
   height: 18px;
+  transition: 0.3s 0s opacity ease-in;
+  background-color: transparent;
+  border: none;
 }
+
+.element__like:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
