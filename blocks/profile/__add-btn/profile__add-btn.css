@@ -1,12 +1,15 @@
 .profile__add-btn {
-  height: 50px;
-  min-width: 150px;
-  background-image: url(../../../images/Vector.svg);
+  position: absolute;
+  right: -40px;
+  top: -45px;
+  background-image: url(../../../images/close-icon.svg);
   background-position: center;
-  background-repeat: no-repeat;
-  background-color: #000;
-  border: 1px solid #fff;
+  width: 50px;
+  height: 50px;
   transition: 0.3s 0s opacity ease-in;
+  background-color: transparent;
+  border: none;
+  padding: 0;
 }
 
 .profile__add-btn:hover {
