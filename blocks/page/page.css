@@ -3,6 +3,7 @@
   min-width: 300px;
   margin: auto;
   padding: 0 199px;
+  box-sizing: border-box;
 }
 
 @media screen and (max-width: 1070px) {
