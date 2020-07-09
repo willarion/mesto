@@ -1,4 +1,4 @@
-.input-line {
+.pop-up__input-line {
   width: 100%;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -9,18 +9,18 @@
   margin-bottom: 30px;
 }
 
-.input-line:last-of-type {
+.pop-up__input-line:last-of-type {
   margin-bottom: 0;
 }
 
-.input-line:focus {
+.pop-up__input-line:focus {
   outline: none;
   border-bottom: 2px;
   border-bottom-style: solid;
 }
 
 @media screen and (max-width: 450px) {
-  .pop-up__line {
+  .pop-up__input-line {
     margin-bottom: 10px;
   }
 }
