@@ -1,27 +1,27 @@
 // все константы и переменные
 const editProfileBtn = document.querySelector('.profile__edit-btn');
-const closePopUpBtn = document.querySelector('.pop-up__reset-btn');
-const popUp = document.querySelector('.pop-up');
+const closeModalBtn = document.querySelector('.modal__reset-btn');
+const modal = document.querySelector('.modal_type_edit-profile');
 
-let formElement = document.querySelector('.pop-up__container');
-let nameInput = document.querySelector('.pop-up__name');
-let bioInput = document.querySelector('.pop-up__bio');
+let formElement = document.querySelector('.modal__container');
+let nameInput = document.querySelector('.modal__name');
+let bioInput = document.querySelector('.modal__bio');
 let profileName = document.querySelector('.profile__name');
 let profileBio = document.querySelector('.profile__bio');
 
-// открытие и закрытие попапа
-function openPopUp() {
-  popUp.classList.add('pop-up_visible');
+// открытие и закрытие модала
+function openModal() {
+  modal.classList.add('modal_visible');
   nameInput.value = profileName.textContent;
   bioInput.value = profileBio.textContent;
 }
 
-function closePopUp() {
-  popUp.classList.remove('pop-up_visible');
+function closeModal() {
+  modal.classList.remove('modal_visible');
 }
 
-editProfileBtn.addEventListener('click', openPopUp);
-closePopUpBtn.addEventListener('click', closePopUp);
+editProfileBtn.addEventListener('click', openModal);
+closeModalBtn.addEventListener('click', closeModal);
 
 
 //работа кнопки "сохранить"
@@ -34,7 +34,7 @@ function formSubmitHandler (evt) {
   profileName.textContent = nameInput.value;;
   profileBio.textContent = bioInput.value;
 
-  closePopUp();
+  closeModal();
 }
 
 formElement.addEventListener('submit', formSubmitHandler);

@@ -7,5 +7,5 @@
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/element/element.css);
 @import url(../blocks/footer/footer.css);
-@import url(../blocks/pop-up/pop-up.css);
-@import url(../blocks/pop-up/_visible/pop-up_visible.css);
+@import url(../blocks/modal/modal.css);
+@import url(../blocks/modal/_visible/modal_visible.css);
