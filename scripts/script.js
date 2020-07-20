@@ -70,8 +70,7 @@ const initialCards = [
 const cardTemplate = document.querySelector('.card-template').content; //содержание template
 const cardList = document.querySelector('.elements__list'); //секция, куда мы добавляем карточки
 
-function createCard () {  
-    for (let i = 0; i < initialCards.length; i += 1) {
+for (let i = 0; i < initialCards.length; i += 1) {
     const cardElement = cardTemplate.cloneNode(true); //копируем содержание template
 
     cardElement.querySelector('.element__text').textContent = initialCards[i].name;
@@ -79,6 +78,4 @@ function createCard () {
 
     cardList.append(cardElement);
   }
-} 
-createCard ();
 
