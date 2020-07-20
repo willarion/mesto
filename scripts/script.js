@@ -79,3 +79,42 @@ for (let i = 0; i < initialCards.length; i += 1) {
     cardList.append(cardElement);
   }
 
+
+//открытие модалки добавления карточки пользователем
+
+//объекты-кнопки
+const addCardButton = document.querySelector('.profile__add-btn');
+const modalAddCardType = document.querySelector('.modal_type_add-card');
+const modalACTResetBtn = modalAddCardType.querySelector('.modal__reset-btn');
+const modalACTSaveBtn = modalAddCardType.querySelector('.modal__save-btn');
+
+function toggleModalACT () {
+  modalAddCardType.classList.toggle('modal_visible');
+}
+
+addCardButton.addEventListener('click', toggleModalACT);
+modalACTResetBtn.addEventListener('click', toggleModalACT);
+
+//работа кнопки "сохранить"
+
+//объекты полей ввода
+const placeTitle = modalAddCardType.querySelector('.modal__place-title');
+const imageURL = modalAddCardType.querySelector('.modal__image-url');
+
+//обработчик событий 
+const modalACTForm = modalAddCardType.querySelector('.modal__container');
+
+function createNewCard (evt) {
+  evt.preventDefault(); 
+  const cardElement = cardTemplate.cloneNode(true); //копируем содержание template
+
+    cardElement.querySelector('.element__text').textContent = placeTitle.value;
+    cardElement.querySelector('.element__image').src = imageURL.value;
+
+    cardList.prepend(cardElement);
+    toggleModalACT();
+}
+
+modalACTForm.addEventListener('submit', createNewCard);
+
+
