@@ -9,7 +9,7 @@ let bioInput = document.querySelector('.modal__bio');
 let profileName = document.querySelector('.profile__name');
 let profileBio = document.querySelector('.profile__bio');
 
-// открытие и закрытие модала
+// открытие и закрытие модала изменения профиля
 function openModal() {
   modal.classList.add('modal_visible');
   nameInput.value = profileName.textContent;
@@ -28,9 +28,6 @@ closeModalBtn.addEventListener('click', closeModal);
 function formSubmitHandler (evt) {
   evt.preventDefault(); 
 
-//  let name = nameInput.value;
-//  let bio = bioInput.value;
-
   profileName.textContent = nameInput.value;;
   profileBio.textContent = bioInput.value;
 
@@ -40,7 +37,8 @@ function formSubmitHandler (evt) {
 formElement.addEventListener('submit', formSubmitHandler);
 
 
-//добавление 6-ти начальных карточек
+
+//добавление карточек
 const initialCards = [
   {
       name: 'Архыз',
@@ -70,51 +68,58 @@ const initialCards = [
 const cardTemplate = document.querySelector('.card-template').content; //содержание template
 const cardList = document.querySelector('.elements__list'); //секция, куда мы добавляем карточки
 
-for (let i = 0; i < initialCards.length; i += 1) {
-    const cardElement = cardTemplate.cloneNode(true); //копируем содержание template
+function createNewCard(data) {
+  const cardElement = cardTemplate.cloneNode(true);
 
-    cardElement.querySelector('.element__text').textContent = initialCards[i].name;
-    cardElement.querySelector('.element__image').src = initialCards[i].link;
+  const cardTitle = cardElement.querySelector('.element__text');
+  const cardImage = cardElement.querySelector('.element__image');
+  const likeCardBtn = cardElement.querySelector('.element__like');
+  //const deleteCardBtn = cardElement.querySelector('element__delete-btn');
 
-    cardList.append(cardElement);
-  }
+  likeCardBtn.addEventListener('click', function (evt) {
+  const eventTarget = evt.target; eventTarget.classList.toggle('element__like_is-liked'); 
+  });  
+
+  cardTitle.textContent = data.name;
+  cardImage.src = data.link;
+  
+  return cardElement;
+}
+  
+function renderCard(data) {
+  cardList.prepend(createNewCard(data));
+}
+
+initialCards.forEach((data) => {
+  renderCard(data);
+});
+
 
 
 //открытие модалки добавления карточки пользователем
-
 //объекты-кнопки
 const addCardButton = document.querySelector('.profile__add-btn');
 const modalAddCardType = document.querySelector('.modal_type_add-card');
 const modalACTResetBtn = modalAddCardType.querySelector('.modal__reset-btn');
 const modalACTSaveBtn = modalAddCardType.querySelector('.modal__save-btn');
 
-function toggleModalACT () {
-  modalAddCardType.classList.toggle('modal_visible');
+function toggleModal (modalType) {
+  modalType.classList.toggle('modal_visible');
 }
 
-addCardButton.addEventListener('click', toggleModalACT);
-modalACTResetBtn.addEventListener('click', toggleModalACT);
+addCardButton.addEventListener('click', () => toggleModal(modalAddCardType));
+modalACTResetBtn.addEventListener('click', () => toggleModal(modalAddCardType));
 
 //работа кнопки "сохранить"
-
 //объекты полей ввода
 const placeTitle = modalAddCardType.querySelector('.modal__place-title');
 const imageURL = modalAddCardType.querySelector('.modal__image-url');
 
-//обработчик событий 
-const modalACTForm = modalAddCardType.querySelector('.modal__container');
+function saveNewCardHandler(evt) {
+  evt.preventDefault();
 
-function createNewCard (evt) {
-  evt.preventDefault(); 
-  const cardElement = cardTemplate.cloneNode(true); //копируем содержание template
-
-    cardElement.querySelector('.element__text').textContent = placeTitle.value;
-    cardElement.querySelector('.element__image').src = imageURL.value;
-
-    cardList.prepend(cardElement);
-    toggleModalACT();
+  renderCard({name: placeTitle.value, link: imageURL.value});
+  toggleModal (modalAddCardType);
 }
 
-modalACTForm.addEventListener('submit', createNewCard);
-
-
+modalACTSaveBtn.addEventListener('submit', saveNewCardHandler);

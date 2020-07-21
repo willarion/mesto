@@ -2,6 +2,8 @@
 @import url(./__caption/element__caption.css);
 @import url(./__text/element__text.css);
 @import url(./__like/element__like.css);
+@import url(./__like/_is-liked/element__like_is-liked.css);
+
 
 .element {
   background-color: #fff;

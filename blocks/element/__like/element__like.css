@@ -6,6 +6,7 @@
   width: 21px;
   height: 18px;
   transition: 0.3s 0s opacity ease-in;
+  transition: 0.3s 0s background-image ease-in;
   background-color: transparent;
   border: none;
 }
@@ -15,3 +16,6 @@
   cursor: pointer;
 }
 
+.element__like:focus {
+  outline: none;
+} 
