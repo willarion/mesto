@@ -74,11 +74,22 @@ function createNewCard(data) {
   const cardTitle = cardElement.querySelector('.element__text');
   const cardImage = cardElement.querySelector('.element__image');
   const likeCardBtn = cardElement.querySelector('.element__like');
-  //const deleteCardBtn = cardElement.querySelector('element__delete-btn');
-
+  const deleteCardBtn = cardElement.querySelector('.element__delete-btn');
+  
   likeCardBtn.addEventListener('click', function (evt) {
-  const eventTarget = evt.target; eventTarget.classList.toggle('element__like_is-liked'); 
+    const eventTarget = evt.target; eventTarget.classList.toggle('element__like_is-liked'); 
   });  
+
+  deleteCardBtn.addEventListener('click', function (evt) {
+    evt.target.closest('.card-element').remove() 
+  });  
+
+  cardImage.addEventListener('click', function (evt) {
+    modalBigImagePicture.src = data.link;
+    modalBigImageCaption.textContent = data.name;
+
+  toggleModal(modalBigImage);
+  }); 
 
   cardTitle.textContent = data.name;
   cardImage.src = data.link;
@@ -100,15 +111,15 @@ initialCards.forEach((data) => {
 //объекты-кнопки
 const addCardButton = document.querySelector('.profile__add-btn');
 const modalAddCardType = document.querySelector('.modal_type_add-card');
-const modalACTResetBtn = modalAddCardType.querySelector('.modal__reset-btn');
-const modalACTSaveBtn = modalAddCardType.querySelector('.modal__save-btn');
+const modalAddCardTypeResetBtn = modalAddCardType.querySelector('.modal__reset-btn');
+const modalAddCardTypeSaveBtn = modalAddCardType.querySelector('.modal__save-btn');
 
 function toggleModal (modalType) {
   modalType.classList.toggle('modal_visible');
 }
 
 addCardButton.addEventListener('click', () => toggleModal(modalAddCardType));
-modalACTResetBtn.addEventListener('click', () => toggleModal(modalAddCardType));
+modalAddCardTypeResetBtn.addEventListener('click', () => toggleModal(modalAddCardType));
 
 //работа кнопки "сохранить"
 //объекты полей ввода
@@ -122,4 +133,15 @@ function saveNewCardHandler(evt) {
   toggleModal (modalAddCardType);
 }
 
-modalACTSaveBtn.addEventListener('submit', saveNewCardHandler);
+modalAddCardTypeSaveBtn.addEventListener('click', saveNewCardHandler);
+
+
+//модалка с большой картинкой (открытие по событию в создании карточки выше)
+const modalBigImage = document.querySelector('.modal_type_big-image');
+const modalBigImageResetBtn = modalBigImage.querySelector('.modal__reset-btn');
+const modalBigImagePicture = modalBigImage.querySelector('.modal__image');
+const modalBigImageCaption = modalBigImage.querySelector('.modal__caption');
+
+//закрытие 
+modalBigImageResetBtn.addEventListener('click', () => toggleModal(modalBigImage));
+

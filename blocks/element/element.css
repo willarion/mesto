@@ -3,6 +3,7 @@
 @import url(./__text/element__text.css);
 @import url(./__like/element__like.css);
 @import url(./__like/_is-liked/element__like_is-liked.css);
+@import url(./__delete-btn/element__delete-btn.css);
 
 
 .element {
@@ -11,4 +12,5 @@
   min-height: 361px;
   overflow: hidden;
   color: #000;
+  position: relative;
 }

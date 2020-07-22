@@ -28,60 +28,6 @@
 
       <section class="elements">
         <ul class="elements__list">
-<!--           <li>
-            <div class="element">
-              <img src="images/karachaevsk.jpg" alt="Карачаевск" class="element__image">
-              <div class="element__caption">
-                <p class="element__text">Карачаево-Черкесия</p>
-                <button type="button" class="element__like"></button>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="element">
-              <img src="images/mount-elbrus.jpg" alt="Эльбрус" class="element__image">
-              <div class="element__caption">
-                <p class="element__text">Гора Эльбрус</p>
-                <button type="button" class="element__like"></button>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="element">
-              <img src="images/dombai.jpg" alt="Домбай" class="element__image">
-              <div class="element__caption">
-                <p class="element__text">Домбай</p>
-                <button type="button" class="element__like"></button>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="element">
-              <img src="images/volcano-avachinsky.jpg" alt="Авачинский" class="element__image">
-              <div class="element__caption">
-                <p class="element__text">Вулкан Авачинский</p>
-                <button type="button" class="element__like"></button>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="element">
-              <img src="images/yuzhny-ural.jpg" alt="Урал" class="element__image">
-              <div class="element__caption">
-                <p class="element__text">Южный Урал</p>
-                <button type="button" class="element__like"></button>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="element">
-              <img src="images/pereval-diatlova.jpg" alt="Перевал Дятлова" class="element__image">
-              <div class="element__caption">
-                <p class="element__text">Перевал Дятлова</p>
-                <button type="button" class="element__like"></button>
-              </div>
-            </div>
-          </li> -->
         </ul>
       </section>
 
@@ -109,15 +55,24 @@
       <fieldset class="modal__info-input">
         <legend class="modal__title">Новое место</legend>
         <input type="text" name="place-title" value="Название" class="modal__place-title modal__input-line">
-        <input type="url" name="image-url" value="Ссылка на картинку" class="modal__image-url modal__input-line">
+        <input type="text" name="image-url" value="Ссылка на картинку" class="modal__image-url modal__input-line">
       </fieldset>
       <input type="submit" class="modal__save-btn" value="Создать">
     </form>
   </div>
 
+  <div class="modal modal_type_big-image">
+    <figure class="modal__figure">
+      <button type="reset" class="modal__reset-btn"></button>
+      <img src="" alt="" class="modal__image">
+      <figcaption class="modal__caption"></figcaption>
+    </figure>
+  </div>
+
   <template class="card-template">
-    <li>
+    <li class="card-element">
       <div class="element">
+        <button type="button" class="element__delete-btn"></button>
         <img src="" alt="" class="element__image">
         <div class="element__caption">
           <p class="element__text"></p>
