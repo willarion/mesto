@@ -125,6 +125,7 @@ modalAddCardTypeResetBtn.addEventListener('click', () => toggleModal(modalAddCar
 //объекты полей ввода
 const placeTitle = modalAddCardType.querySelector('.modal__place-title');
 const imageURL = modalAddCardType.querySelector('.modal__image-url');
+const modalAddCardTypeForm = modalAddCardType.querySelector('.modal__container');
 
 function saveNewCardHandler(evt) {
   evt.preventDefault();
@@ -133,7 +134,7 @@ function saveNewCardHandler(evt) {
   toggleModal (modalAddCardType);
 }
 
-modalAddCardTypeSaveBtn.addEventListener('click', saveNewCardHandler);
+modalAddCardTypeForm.addEventListener('submit', saveNewCardHandler);
 
 
 //модалка с большой картинкой (открытие по событию в создании карточки выше)
