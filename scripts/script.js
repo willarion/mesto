@@ -1,4 +1,9 @@
-// все константы и переменные
+//работа модальных окон
+function toggleModal (modalType) {
+  modalType.classList.toggle('modal_visible');
+}
+
+// открытие и закрытие модала изменения профиля
 const editProfileBtn = document.querySelector('.profile__edit-btn');
 const closeModalBtn = document.querySelector('.modal__reset-btn');
 const modal = document.querySelector('.modal_type_edit-profile');
@@ -9,32 +14,61 @@ let bioInput = document.querySelector('.modal__bio');
 let profileName = document.querySelector('.profile__name');
 let profileBio = document.querySelector('.profile__bio');
 
-// открытие и закрытие модала изменения профиля
 function openModal() {
-  modal.classList.add('modal_visible');
+  toggleModal(modal);
   nameInput.value = profileName.textContent;
   bioInput.value = profileBio.textContent;
 }
 
-function closeModal() {
-  modal.classList.remove('modal_visible');
-}
-
 editProfileBtn.addEventListener('click', openModal);
-closeModalBtn.addEventListener('click', closeModal);
+closeModalBtn.addEventListener('click', () => toggleModal(modal));
 
-
-//работа кнопки "сохранить"
-function formSubmitHandler (evt) {
+function formSubmitHandler (evt) { //сохранить
   evt.preventDefault(); 
 
   profileName.textContent = nameInput.value;;
   profileBio.textContent = bioInput.value;
 
-  closeModal();
+  toggleModal(modal);
 }
 
 formElement.addEventListener('submit', formSubmitHandler);
+
+//открытие модалки добавления карточки пользователем
+//объекты-кнопки
+const addCardButton = document.querySelector('.profile__add-btn');
+const modalAddCardType = document.querySelector('.modal_type_add-card');
+const modalAddCardTypeResetBtn = modalAddCardType.querySelector('.modal__reset-btn');
+const modalAddCardTypeSaveBtn = modalAddCardType.querySelector('.modal__save-btn');
+
+
+addCardButton.addEventListener('click', () => toggleModal(modalAddCardType));
+modalAddCardTypeResetBtn.addEventListener('click', () => toggleModal(modalAddCardType));
+
+//работа кнопки "сохранить"
+//объекты полей ввода
+const placeTitle = modalAddCardType.querySelector('.modal__place-title');
+const imageURL = modalAddCardType.querySelector('.modal__image-url');
+const modalAddCardTypeForm = modalAddCardType.querySelector('.modal__container');
+
+function saveNewCardHandler(evt) {
+  evt.preventDefault();
+
+  renderCard({name: placeTitle.value, link: imageURL.value});
+  toggleModal (modalAddCardType);
+}
+
+modalAddCardTypeForm.addEventListener('submit', saveNewCardHandler);
+
+
+//модалка с большой картинкой (открытие по событию в создании карточки выше)
+const modalBigImage = document.querySelector('.modal_type_big-image');
+const modalBigImageResetBtn = modalBigImage.querySelector('.modal__reset-btn');
+const modalBigImagePicture = modalBigImage.querySelector('.modal__image');
+const modalBigImageCaption = modalBigImage.querySelector('.modal__caption');
+
+//закрытие 
+modalBigImageResetBtn.addEventListener('click', () => toggleModal(modalBigImage));
 
 
 
@@ -107,42 +141,8 @@ initialCards.forEach((data) => {
 
 
 
-//открытие модалки добавления карточки пользователем
-//объекты-кнопки
-const addCardButton = document.querySelector('.profile__add-btn');
-const modalAddCardType = document.querySelector('.modal_type_add-card');
-const modalAddCardTypeResetBtn = modalAddCardType.querySelector('.modal__reset-btn');
-const modalAddCardTypeSaveBtn = modalAddCardType.querySelector('.modal__save-btn');
-
-function toggleModal (modalType) {
-  modalType.classList.toggle('modal_visible');
-}
-
-addCardButton.addEventListener('click', () => toggleModal(modalAddCardType));
-modalAddCardTypeResetBtn.addEventListener('click', () => toggleModal(modalAddCardType));
-
-//работа кнопки "сохранить"
-//объекты полей ввода
-const placeTitle = modalAddCardType.querySelector('.modal__place-title');
-const imageURL = modalAddCardType.querySelector('.modal__image-url');
-const modalAddCardTypeForm = modalAddCardType.querySelector('.modal__container');
-
-function saveNewCardHandler(evt) {
-  evt.preventDefault();
-
-  renderCard({name: placeTitle.value, link: imageURL.value});
-  toggleModal (modalAddCardType);
-}
-
-modalAddCardTypeForm.addEventListener('submit', saveNewCardHandler);
 
 
-//модалка с большой картинкой (открытие по событию в создании карточки выше)
-const modalBigImage = document.querySelector('.modal_type_big-image');
-const modalBigImageResetBtn = modalBigImage.querySelector('.modal__reset-btn');
-const modalBigImagePicture = modalBigImage.querySelector('.modal__image');
-const modalBigImageCaption = modalBigImage.querySelector('.modal__caption');
 
-//закрытие 
-modalBigImageResetBtn.addEventListener('click', () => toggleModal(modalBigImage));
+
 
