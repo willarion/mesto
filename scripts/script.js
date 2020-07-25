@@ -3,7 +3,7 @@ const editProfileBtn = document.querySelector('.profile__edit-btn');
 const closeModalBtn = document.querySelector('.modal__reset-btn');
 const modal = document.querySelector('.modal_type_edit-profile');
 
-let formElement = document.querySelector('.modal__container');
+const formElement = document.querySelector('.modal__container');
 let nameInput = document.querySelector('.modal__name');
 let bioInput = document.querySelector('.modal__bio');
 let profileName = document.querySelector('.profile__name');
