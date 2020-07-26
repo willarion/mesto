@@ -54,7 +54,10 @@ const modalAddCardTypeForm = modalAddCardType.querySelector('.modal__container')
 function saveNewCardHandler(evt) {
   evt.preventDefault();
 
-  renderCard({name: placeTitle.value, link: imageURL.value},createNewCard);
+ let CardInfo = {name: placeTitle.value, link: imageURL.value};
+ let newCard = createNewCard(CardInfo); 
+ renderCard(newCard);
+  
   toggleModal (modalAddCardType);
 }
 
@@ -168,13 +171,14 @@ function createNewCard(data) {
   return cardElement;
 }
   
-function renderCard(data, callback) {
-  let newCard = callback(data);
-  cardList.prepend(newCard);
-}
+
+function renderCard(card) {
+  cardList.prepend(card);
+} 
 
 initialCards.forEach((data) => {
-  renderCard(data, createNewCard);
+  let card = createNewCard(data);
+  renderCard(card);
 });
 
 
