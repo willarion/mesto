@@ -54,7 +54,10 @@ const modalAddCardTypeForm = modalAddCardType.querySelector('.modal__container')
 function saveNewCardHandler(evt) {
   evt.preventDefault();
 
-  renderCard({name: placeTitle.value, link: imageURL.value});
+ let CardInfo = {name: placeTitle.value, link: imageURL.value};
+ let newCard = createNewCard(CardInfo); 
+ renderCard(newCard);
+  
   toggleModal (modalAddCardType);
 }
 
@@ -102,7 +105,7 @@ const initialCards = [
 const cardTemplate = document.querySelector('.card-template').content; //содержание template
 const cardList = document.querySelector('.elements__list'); //секция, куда мы добавляем карточки
 
-function createNewCard(data) {
+/* function createNewCard(data) {
   const cardElement = cardTemplate.cloneNode(true);
 
   const cardTitle = cardElement.querySelector('.element__text');
@@ -137,9 +140,46 @@ function renderCard(data) {
 
 initialCards.forEach((data) => {
   renderCard(data);
+}); */
+
+function createNewCard(data) {
+  const cardElement = cardTemplate.cloneNode(true);
+
+  const cardTitle = cardElement.querySelector('.element__text');
+  const cardImage = cardElement.querySelector('.element__image');
+  const likeCardBtn = cardElement.querySelector('.element__like');
+  const deleteCardBtn = cardElement.querySelector('.element__delete-btn');
+  
+  likeCardBtn.addEventListener('click', function (evt) {
+    const eventTarget = evt.target; eventTarget.classList.toggle('element__like_is-liked'); 
+  });  
+
+  deleteCardBtn.addEventListener('click', function (evt) {
+    evt.target.closest('.card-element').remove() 
+  });  
+
+  cardImage.addEventListener('click', function (evt) {
+    modalBigImagePicture.src = data.link;
+    modalBigImageCaption.textContent = data.name;
+
+  toggleModal(modalBigImage);
+  }); 
+
+  cardTitle.textContent = data.name;
+  cardImage.src = data.link;
+  
+  return cardElement;
+}
+  
+
+function renderCard(card) {
+  cardList.prepend(card);
+} 
+
+initialCards.forEach((data) => {
+  let card = createNewCard(data);
+  renderCard(card);
 });
-
-
 
 
 
