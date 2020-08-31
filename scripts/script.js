@@ -71,14 +71,22 @@ const modalBigImagePicture = modalBigImage.querySelector('.modal__image');
 const modalBigImageCaption = modalBigImage.querySelector('.modal__caption');
 
 
-//закрытие всех модалок кликом
+//закрытие всех модалок кликом и esc
+function closeModal(modalType) {
+  modalType.classList.remove('modal_visible');
+}
+
 function modalClosing() {
   const modalsList = Array.from(document.querySelectorAll('.modal'));
   modalsList.forEach((modalItem) => {
     modalItem.addEventListener('click', (evt) => {
       if (evt.target.classList.contains('modal') || evt.target.classList.contains('modal__reset-btn')) {
-        console.log(evt.target);
-        modalItem.classList.remove('modal_visible');
+        closeModal(modalItem);
+      }
+    });
+    document.addEventListener('keydown', (evt) => {
+      if (evt.key === "Escape") {
+        closeModal(modalItem);
       }
     });
   });
