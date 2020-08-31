@@ -21,7 +21,7 @@ function openModal() {
 }
 
 editProfileBtn.addEventListener('click', openModal);
-closeModalBtn.addEventListener('click', () => toggleModal(modal));
+
 
 function formSubmitHandler (evt) { //сохранить
   evt.preventDefault(); 
@@ -43,7 +43,7 @@ const modalAddCardTypeSaveBtn = modalAddCardType.querySelector('.modal__save-btn
 
 
 addCardButton.addEventListener('click', () => toggleModal(modalAddCardType));
-modalAddCardTypeResetBtn.addEventListener('click', () => toggleModal(modalAddCardType));
+
 
 //работа кнопки "сохранить"
 //объекты полей ввода
@@ -70,9 +70,21 @@ const modalBigImageResetBtn = modalBigImage.querySelector('.modal__reset-btn');
 const modalBigImagePicture = modalBigImage.querySelector('.modal__image');
 const modalBigImageCaption = modalBigImage.querySelector('.modal__caption');
 
-//закрытие 
-modalBigImageResetBtn.addEventListener('click', () => toggleModal(modalBigImage));
 
+//закрытие всех модалок кликом
+function modalClosing() {
+  const modalsList = Array.from(document.querySelectorAll('.modal'));
+  modalsList.forEach((modalItem) => {
+    modalItem.addEventListener('click', (evt) => {
+      if (evt.target.classList.contains('modal') || evt.target.classList.contains('modal__reset-btn')) {
+        console.log(evt.target);
+        modalItem.classList.remove('modal_visible');
+      }
+    });
+  });
+}
+
+modalClosing();
 
 
 //добавление карточек
