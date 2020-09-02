@@ -150,11 +150,19 @@ initialCards.forEach((data) => {
 
 
 editProfileBtn.addEventListener('click', editProfile);
-modalClosing();
 formElement.addEventListener('submit', formSubmitHandler);
 
-addCardButton.addEventListener('click', () => openModal(modalAddCardType));
+addCardButton.addEventListener('click', () => {
+  openModal(modalAddCardType);
+  //отключение кнопки сохранить
+  modalAddCardType.querySelector('.modal__container').reset();
+  modalAddCardTypeSaveBtn.setAttribute('disabled', true);
+  modalAddCardTypeSaveBtn.classList.add('modal__save-btn_disabled');
+});
+
 modalAddCardTypeForm.addEventListener('submit', saveNewCardHandler);
+
+modalClosing();
 
 
 
