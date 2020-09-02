@@ -2,7 +2,7 @@ const editProfileBtn = document.querySelector('.profile__edit-btn');
 const closeModalBtn = document.querySelector('.modal__reset-btn');
 const modal = document.querySelector('.modal_type_edit-profile');
 
-const formElement = document.querySelector('.modal__container');
+const editProfileFormElement = document.querySelector('.modal__edit-profile-form');
 const nameInput = document.querySelector('.modal__name');
 const bioInput = document.querySelector('.modal__bio');
 const profileName = document.querySelector('.profile__name');
@@ -150,7 +150,7 @@ initialCards.forEach((data) => {
 
 
 editProfileBtn.addEventListener('click', editProfile);
-formElement.addEventListener('submit', formSubmitHandler);
+editProfileFormElement.addEventListener('submit', formSubmitHandler);
 
 addCardButton.addEventListener('click', () => {
   openModal(modalAddCardType);
@@ -163,17 +163,3 @@ addCardButton.addEventListener('click', () => {
 modalAddCardTypeForm.addEventListener('submit', saveNewCardHandler);
 
 modalClosing();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
