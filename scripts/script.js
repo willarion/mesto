@@ -1,3 +1,6 @@
+import {Card} from './Сard.js'
+
+
 const editProfileBtn = document.querySelector('.profile__edit-btn');
 const closeModalBtn = document.querySelector('.modal__reset-btn');
 const modal = document.querySelector('.modal_type_edit-profile');
@@ -19,8 +22,7 @@ const modalAddCardTypeForm = modalAddCardType.querySelector('.modal__container')
 
 const modalBigImage = document.querySelector('.modal_type_big-image');
 const modalBigImageResetBtn = modalBigImage.querySelector('.modal__reset-btn');
-const modalBigImagePicture = modalBigImage.querySelector('.modal__image');
-const modalBigImageCaption = modalBigImage.querySelector('.modal__caption');
+
 
 const initialCards = [
   {
@@ -48,11 +50,8 @@ const initialCards = [
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-const cardTemplate = document.querySelector('.card-template').content; //содержание template
-const cardList = document.querySelector('.elements__list'); //секция, куда мы добавляем карточки
 
-
-
+const cardList = document.querySelector('.elements__list'); 
 
 //работа модальных окон
 function openModal (modalType) {
@@ -108,47 +107,6 @@ function saveNewCardHandler(evt) {
   closeModal(modalAddCardType);
 }
 
-//добавление карточек
-function createNewCard(data) {
-  const cardElement = cardTemplate.cloneNode(true);
-
-  const cardTitle = cardElement.querySelector('.element__text');
-  const cardImage = cardElement.querySelector('.element__image');
-  const likeCardBtn = cardElement.querySelector('.element__like');
-  const deleteCardBtn = cardElement.querySelector('.element__delete-btn');
-  
-  likeCardBtn.addEventListener('click', function (evt) {
-    const eventTarget = evt.target; eventTarget.classList.toggle('element__like_is-liked'); 
-  });  
-
-  deleteCardBtn.addEventListener('click', function (evt) {
-    evt.target.closest('.card-element').remove() 
-  });  
-
-  cardImage.addEventListener('click', function () {
-    modalBigImagePicture.src = data.link;
-    modalBigImageCaption.textContent = data.name;
-
-    openModal(modalBigImage);
-  }); 
-
-  cardTitle.textContent = data.name;
-  cardImage.src = data.link;
-  
-  return cardElement;
-}
-  
-function renderCard(card) {
-  cardList.prepend(card);
-} 
-
-initialCards.forEach((data) => {
-  const card = createNewCard(data);
-  renderCard(card);
-});
-
-
-
 editProfileBtn.addEventListener('click', editProfile);
 editProfileFormElement.addEventListener('submit', formSubmitHandler);
 
@@ -163,3 +121,17 @@ addCardButton.addEventListener('click', () => {
 modalAddCardTypeForm.addEventListener('submit', saveNewCardHandler);
 
 modalClosing();
+
+
+
+function renderCard(card) {
+  cardList.prepend(card);
+}
+
+
+initialCards.forEach((data) => {
+  const card = new Card(data, '.card-template', openModal, modalBigImage);
+  const cardElement = card.createNewCard();
+
+  renderCard(cardElement);
+});
