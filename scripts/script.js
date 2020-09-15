@@ -2,7 +2,6 @@ import {Card} from './Сard.js'
 
 
 const editProfileBtn = document.querySelector('.profile__edit-btn');
-const closeModalBtn = document.querySelector('.modal__reset-btn');
 const modal = document.querySelector('.modal_type_edit-profile');
 
 const editProfileFormElement = document.querySelector('.modal__edit-profile-form');
@@ -13,7 +12,6 @@ const profileBio = document.querySelector('.profile__bio');
 
 const addCardButton = document.querySelector('.profile__add-btn');
 const modalAddCardType = document.querySelector('.modal_type_add-card');
-const modalAddCardTypeResetBtn = modalAddCardType.querySelector('.modal__reset-btn');
 const modalAddCardTypeSaveBtn = modalAddCardType.querySelector('.modal__save-btn');
 
 const placeTitle = modalAddCardType.querySelector('.modal__place-title');
@@ -21,7 +19,6 @@ const imageURL = modalAddCardType.querySelector('.modal__image-url');
 const modalAddCardTypeForm = modalAddCardType.querySelector('.modal__container');
 
 const modalBigImage = document.querySelector('.modal_type_big-image');
-const modalBigImageResetBtn = modalBigImage.querySelector('.modal__reset-btn');
 
 
 const initialCards = [
@@ -85,7 +82,7 @@ function modalClosing() {
 }
 
 
-//сохранить
+//работа кнопки "сохранить" для редактирования профиля
 function formSubmitHandler (evt) { 
   evt.preventDefault(); 
 
@@ -95,17 +92,6 @@ function formSubmitHandler (evt) {
   closeModal(modal);
 }
 
-
-//работа кнопки "сохранить" для редактирования профиля
-function saveNewCardHandler(evt) {
-  evt.preventDefault();
-
-  const cardInfo = {name: placeTitle.value, link: imageURL.value};
-  const newCard = createNewCard(cardInfo); 
-  renderCard(newCard);
-  
-  closeModal(modalAddCardType);
-}
 
 editProfileBtn.addEventListener('click', editProfile);
 editProfileFormElement.addEventListener('submit', formSubmitHandler);
@@ -135,3 +121,15 @@ initialCards.forEach((data) => {
 
   renderCard(cardElement);
 });
+
+function saveNewCardHandler(evt) {
+  evt.preventDefault();
+
+  const cardInfo = {name: placeTitle.value, link: imageURL.value};
+  const newCard = new Card(cardInfo, '.card-template', openModal, modalBigImage);
+  const cardElement = newCard.createNewCard();
+
+  renderCard(cardElement);
+  
+  closeModal(modalAddCardType);
+}
