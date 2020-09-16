@@ -1,4 +1,5 @@
 import {Card} from './Сard.js'
+import {FormValidator} from './FormValidator.js'
 
 
 const editProfileBtn = document.querySelector('.profile__edit-btn');
@@ -109,11 +110,10 @@ modalAddCardTypeForm.addEventListener('submit', saveNewCardHandler);
 modalClosing();
 
 
-
+//добавление карточек
 function renderCard(card) {
   cardList.prepend(card);
 }
-
 
 initialCards.forEach((data) => {
   const card = new Card(data, '.card-template', openModal, modalBigImage);
@@ -133,3 +133,22 @@ function saveNewCardHandler(evt) {
   
   closeModal(modalAddCardType);
 }
+
+
+//валидация формы
+const formSettingsObj = {
+  inputSelector: '.modal__input-line',
+  submitButtonSelector: '.modal__save-btn',
+  inactiveButtonClass: 'modal__save-btn_disabled',
+  inputErrorClass: 'modal__input-line_type_error',
+  errorClass: 'modal__error_visible',
+}
+
+const addCardFormSelector = document.querySelector('.modal__add-card-form');
+const editProfileFormSelector = document.querySelector('.modal__edit-profile-form');
+
+const addCardFormValidator = new FormValidator(formSettingsObj, addCardFormSelector); 
+addCardFormValidator.enableValidation();
+
+const editProfileFormValidator = new FormValidator(formSettingsObj, editProfileFormSelector); 
+editProfileFormValidator.enableValidation();
