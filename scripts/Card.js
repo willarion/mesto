@@ -18,13 +18,18 @@ class Card {
   
   createNewCard(){
     this._cardElement = this._getTemplate();
+    this._cardImage = this._cardElement.querySelector('.element__image');
 
     this._cardElement.querySelector('.element__text').textContent = this._name;
-    this._cardElement.querySelector('.element__image').src = this._link;
+    this._cardImage.src = this._link;
+
+    if (/[а-я]/i.test(this._name)) {
+      this._cardImage.alt = this._name;
+    } else {this._cardImage.alt = 'место';}
 
     this._likeCardSetEventListeners();
     this._deleteCardSetEventListeners();
-    this._openBigImageSetEventListeners();
+    this._openBigImageSetEventListeners(this._cardImage);
 
     return this._cardElement;
   }
@@ -44,12 +49,12 @@ class Card {
     evt.target.closest('.card-element').remove();
   }
 
-  _openBigImageSetEventListeners() {
-    this._cardElement.querySelector('.element__image').addEventListener('click', () => {this._openBigImage()});
+  _openBigImageSetEventListeners(image) {
+   image.addEventListener('click', () => {this._openBigImage()});
   }
   _openBigImage() {
-    document.querySelector('.modal_type_big-image').querySelector('.modal__image').src = this._link;
-    document.querySelector('.modal_type_big-image').querySelector('.modal__caption').textContent = this._name;
+    this._modalBigImage.querySelector('.modal__image').src = this._link;
+    this._modalBigImage.querySelector('.modal__caption').textContent = this._name;
 
     this._openModal(this._modalBigImage);
   }

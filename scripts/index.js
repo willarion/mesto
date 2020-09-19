@@ -1,4 +1,4 @@
-import {Card} from './Сard.js'
+import {Card} from './Card.js'
 import {FormValidator} from './FormValidator.js'
 
 
@@ -14,10 +14,11 @@ const profileBio = document.querySelector('.profile__bio');
 const addCardButton = document.querySelector('.profile__add-btn');
 const modalAddCardType = document.querySelector('.modal_type_add-card');
 const modalAddCardTypeSaveBtn = modalAddCardType.querySelector('.modal__save-btn');
-
 const placeTitle = modalAddCardType.querySelector('.modal__place-title');
 const imageURL = modalAddCardType.querySelector('.modal__image-url');
 const modalAddCardTypeForm = modalAddCardType.querySelector('.modal__container');
+
+const cardImage = document.querySelector('.card-template').content.querySelector('.element__image');
 
 const modalBigImage = document.querySelector('.modal_type_big-image');
 
@@ -116,7 +117,8 @@ function renderCard(card) {
 }
 
 initialCards.forEach((data) => {
-  const card = new Card(data, '.card-template', openModal, modalBigImage);
+  
+  const card = new Card(data, '.card-template', openModal, modalBigImage, cardImage);
   const cardElement = card.createNewCard();
 
   renderCard(cardElement);
@@ -126,7 +128,7 @@ function saveNewCardHandler(evt) {
   evt.preventDefault();
 
   const cardInfo = {name: placeTitle.value, link: imageURL.value};
-  const newCard = new Card(cardInfo, '.card-template', openModal, modalBigImage);
+  const newCard = new Card(cardInfo, '.card-template', openModal, modalBigImage, cardImage);
   const cardElement = newCard.createNewCard();
 
   renderCard(cardElement);
