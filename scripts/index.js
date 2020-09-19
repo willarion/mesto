@@ -55,6 +55,14 @@ const cardList = document.querySelector('.elements__list');
 //работа модальных окон
 function openModal (modalType) {
   modalType.classList.add('modal_visible');
+
+  function escapeModalClosing (evt) {
+    if (evt.key === "Escape") {
+      closeModal(modalType);
+      document.removeEventListener('keydown', escapeModalClosing);
+    }
+  }
+  document.addEventListener('keydown', escapeModalClosing);
 }
 
 function editProfile() {
@@ -72,11 +80,6 @@ function modalClosing() {
   modalsList.forEach((modalItem) => {
     modalItem.addEventListener('click', (evt) => {
       if (evt.target.classList.contains('modal') || evt.target.classList.contains('modal__reset-btn')) {
-        closeModal(modalItem);
-      }
-    });
-    document.addEventListener('keydown', (evt) => {
-      if (evt.key === "Escape") {
         closeModal(modalItem);
       }
     });
