@@ -1,5 +1,6 @@
 import {Card} from './Card.js'
 import {FormValidator} from './FormValidator.js'
+import {Section} from './Section.js'
 
 
 const editProfileBtn = document.querySelector('.profile__edit-btn');
@@ -23,7 +24,7 @@ const cardImage = document.querySelector('.card-template').content.querySelector
 const modalBigImage = document.querySelector('.modal_type_big-image');
 
 
-const initialCards = [
+const items = [
   {
       name: 'Архыз',
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -50,7 +51,6 @@ const initialCards = [
   }
 ];
 
-const cardList = document.querySelector('.elements__list'); 
 
 //работа модальных окон
 function openModal (modalType) {
@@ -115,29 +115,34 @@ modalClosing();
 
 
 //добавление карточек
-function renderCard(card) {
-  cardList.prepend(card);
+function renderer(cardData) {
+
+  const newCard = new Card(cardData, '.card-template', openModal, modalBigImage, cardImage);
+
+  const cardElement = newCard.createNewCard();
+  this.addItem(cardElement);
 }
 
-initialCards.forEach((data) => {
-  
-  const card = new Card(data, '.card-template', openModal, modalBigImage, cardImage);
-  const cardElement = card.createNewCard();
 
-  renderCard(cardElement);
-});
+const section = new Section({items, renderer}, '.elements__list');
+section.renderInitialCards();
+
 
 function saveNewCardHandler(evt) {
   evt.preventDefault();
 
   const cardInfo = {name: placeTitle.value, link: imageURL.value};
+  
   const newCard = new Card(cardInfo, '.card-template', openModal, modalBigImage, cardImage);
   const cardElement = newCard.createNewCard();
 
-  renderCard(cardElement);
-  
+  section.addItem(cardElement);
+    
   closeModal(modalAddCardType);
 }
+
+
+
 
 
 //валидация формы
