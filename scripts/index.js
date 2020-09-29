@@ -1,6 +1,7 @@
 import {Card} from './Card.js'
 import {FormValidator} from './FormValidator.js'
 import {Section} from './Section.js'
+import {Popup} from './Popup.js'
 
 
 const editProfileBtn = document.querySelector('.profile__edit-btn');
@@ -53,39 +54,18 @@ const items = [
 
 
 //работа модальных окон
-function openModal (modalType) {
-  modalType.classList.add('modal_visible');
+const editProfilePopup = new Popup('.modal_type_edit-profile');
+editProfilePopup.setEventListeners();
 
-  function escapeModalClosing (evt) {
-    if (evt.key === "Escape") {
-      closeModal(modalType);
-      document.removeEventListener('keydown', escapeModalClosing);
-    }
-  }
-  document.addEventListener('keydown', escapeModalClosing);
-}
+const addCardPopup = new Popup('.modal_type_add-card');
+addCardPopup.setEventListeners();
 
+//редактирование профиля
 function editProfile() {
-  openModal(modal);
+  editProfilePopup.openPopup(modal);
   nameInput.value = profileName.textContent;
   bioInput.value = profileBio.textContent;
 }
-
-function closeModal(modalType) {
-  modalType.classList.remove('modal_visible');
-}
-
-function modalClosing() {
-  const modalsList = Array.from(document.querySelectorAll('.modal'));
-  modalsList.forEach((modalItem) => {
-    modalItem.addEventListener('click', (evt) => {
-      if (evt.target.classList.contains('modal') || evt.target.classList.contains('modal__reset-btn')) {
-        closeModal(modalItem);
-      }
-    });
-  });
-}
-
 
 //работа кнопки "сохранить" для редактирования профиля
 function formSubmitHandler (evt) { 
@@ -94,15 +74,16 @@ function formSubmitHandler (evt) {
   profileName.textContent = nameInput.value;
   profileBio.textContent = bioInput.value;
 
-  closeModal(modal);
+  editProfilePopup.closePopup(modal);
 }
-
 
 editProfileBtn.addEventListener('click', editProfile);
 editProfileFormElement.addEventListener('submit', formSubmitHandler);
 
+
+// модалка добавления новой карточки
 addCardButton.addEventListener('click', () => {
-  openModal(modalAddCardType);
+  addCardPopup.openPopup(modalAddCardType);
   //отключение кнопки сохранить
   modalAddCardType.querySelector('.modal__container').reset();
   modalAddCardTypeSaveBtn.setAttribute('disabled', true);
@@ -111,13 +92,12 @@ addCardButton.addEventListener('click', () => {
 
 modalAddCardTypeForm.addEventListener('submit', saveNewCardHandler);
 
-modalClosing();
 
 
 //добавление карточек
 function renderer(cardData) {
 
-  const newCard = new Card(cardData, '.card-template', openModal, modalBigImage, cardImage);
+  const newCard = new Card(cardData, '.card-template', /*openModal,*/ modalBigImage, cardImage);
 
   const cardElement = newCard.createNewCard();
   this.addItem(cardElement);
@@ -133,14 +113,13 @@ function saveNewCardHandler(evt) {
 
   const cardInfo = {name: placeTitle.value, link: imageURL.value};
   
-  const newCard = new Card(cardInfo, '.card-template', openModal, modalBigImage, cardImage);
+  const newCard = new Card(cardInfo, '.card-template', /*openModal, */modalBigImage, cardImage);
   const cardElement = newCard.createNewCard();
 
   section.addItem(cardElement);
     
-  closeModal(modalAddCardType);
+  addCardPopup.closePopup(modalAddCardType);
 }
-
 
 
 
