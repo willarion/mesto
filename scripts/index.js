@@ -2,6 +2,7 @@ import {Card} from './Card.js'
 import {FormValidator} from './FormValidator.js'
 import {Section} from './Section.js'
 import {Popup} from './Popup.js'
+import {PopupWithImage} from './PopupWithImage.js'
 
 
 const editProfileBtn = document.querySelector('.profile__edit-btn');
@@ -19,10 +20,6 @@ const modalAddCardTypeSaveBtn = modalAddCardType.querySelector('.modal__save-btn
 const placeTitle = modalAddCardType.querySelector('.modal__place-title');
 const imageURL = modalAddCardType.querySelector('.modal__image-url');
 const modalAddCardTypeForm = modalAddCardType.querySelector('.modal__container');
-
-const cardImage = document.querySelector('.card-template').content.querySelector('.element__image');
-
-const modalBigImage = document.querySelector('.modal_type_big-image');
 
 
 const items = [
@@ -53,12 +50,13 @@ const items = [
 ];
 
 
-//работа модальных окон
+//работа модальных окон 
 const editProfilePopup = new Popup('.modal_type_edit-profile');
 editProfilePopup.setEventListeners();
 
 const addCardPopup = new Popup('.modal_type_add-card');
 addCardPopup.setEventListeners();
+
 
 //редактирование профиля
 function editProfile() {
@@ -93,11 +91,21 @@ addCardButton.addEventListener('click', () => {
 modalAddCardTypeForm.addEventListener('submit', saveNewCardHandler);
 
 
+// открытие попапа с большой картинкой
+function handleCardClick(name, link) {
+  const bigImagePopup = new PopupWithImage(name, link, '.modal_type_big-image');
+  bigImagePopup.setEventListeners();
+  bigImagePopup.openPopup();
+}
+
+
+
+
 
 //добавление карточек
 function renderer(cardData) {
 
-  const newCard = new Card(cardData, '.card-template', /*openModal,*/ modalBigImage, cardImage);
+  const newCard = new Card(cardData, '.card-template',  handleCardClick);
 
   const cardElement = newCard.createNewCard();
   this.addItem(cardElement);
@@ -113,7 +121,7 @@ function saveNewCardHandler(evt) {
 
   const cardInfo = {name: placeTitle.value, link: imageURL.value};
   
-  const newCard = new Card(cardInfo, '.card-template', /*openModal, */modalBigImage, cardImage);
+  const newCard = new Card(cardInfo, '.card-template', handleCardClick);
   const cardElement = newCard.createNewCard();
 
   section.addItem(cardElement);

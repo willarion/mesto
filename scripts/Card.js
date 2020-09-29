@@ -1,12 +1,10 @@
-
-class Card {
+export class Card {
   
-  constructor(data, cardSelector, /*openModal, */modalBigImage) {
+  constructor(data, cardSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
-   // this._openModal = openModal;
-    this._modalBigImage = modalBigImage;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -29,7 +27,7 @@ class Card {
 
     this._likeCardSetEventListeners();
     this._deleteCardSetEventListeners();
-    // this._openBigImageSetEventListeners(this._cardImage);
+    this._openBigImageSetEventListeners(this._cardImage);
 
     return this._cardElement;
   }
@@ -48,17 +46,10 @@ class Card {
   _deleteCard(evt) {
     evt.target.closest('.card-element').remove();
   }
-/*
-  _openBigImageSetEventListeners(image) {
-   image.addEventListener('click', () => {this._openBigImage()});
-  }
-  _openBigImage() {
-    this._modalBigImage.querySelector('.modal__image').src = this._link;
-    this._modalBigImage.querySelector('.modal__caption').textContent = this._name;
 
-    this._openModal(this._modalBigImage);
-  }*/
+  _openBigImageSetEventListeners(image) {
+   image.addEventListener('click', () => {this._handleCardClick(this._name, this._link)});
+  }
 }
 
 
-export {Card};
