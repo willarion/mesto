@@ -1,23 +1,21 @@
 import {Card} from './Card.js'
 import {FormValidator} from './FormValidator.js'
 import {Section} from './Section.js'
-//import {Popup} from './Popup.js'
 import {PopupWithImage} from './PopupWithImage.js'
 import {PopupWithForm} from './PopupWithForm.js'
+import {UserInfo} from './UserInfo.js'
+
+
+
 
 
 const editProfileBtn = document.querySelector('.profile__edit-btn');
-
-const nameInput = document.querySelector('.modal__name');
-const bioInput = document.querySelector('.modal__bio');
-const profileName = document.querySelector('.profile__name');
-const profileBio = document.querySelector('.profile__bio');
-
 const addCardButton = document.querySelector('.profile__add-btn');
 const modalAddCardType = document.querySelector('.modal_type_add-card');
 const modalAddCardTypeSaveBtn = modalAddCardType.querySelector('.modal__save-btn');
 
-
+const nameInput = document.querySelector('.modal__name');
+const bioInput = document.querySelector('.modal__bio');
 
 const items = [
   {
@@ -46,12 +44,22 @@ const items = [
   }
 ];
 
+const userInfoSelectors = {
+  nameSelector: '.profile__name',
+  bioSelector: '.profile__bio'
+}
+
+
+
+
+
 
 //редактирование профиля
+const userInfo = new UserInfo(userInfoSelectors);
+
 const editProfilePopup = new PopupWithForm('.modal_type_edit-profile', (inputValues) => {
 
-  profileName.textContent = inputValues.name;
-  profileBio.textContent = inputValues.bio;
+  userInfo.setUserInfo(inputValues);
 
   editProfilePopup.closePopup();
 });
@@ -61,8 +69,10 @@ editProfilePopup.setEventListeners();
 
 function editProfile() {
   editProfilePopup.openPopup();
-  nameInput.value = profileName.textContent;
-  bioInput.value = profileBio.textContent;
+
+  const userInfoObj = userInfo.getUserInfo();
+  nameInput.value = userInfoObj.name;
+  bioInput.value = userInfoObj.bio;
 }
 
 editProfileBtn.addEventListener('click', editProfile);
