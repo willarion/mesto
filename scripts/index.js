@@ -108,7 +108,7 @@ function renderer(cardData) {
   const newCard = new Card(cardData, '.card-template',  handleCardClick);
 
   const cardElement = newCard.createNewCard();
-  this.addItem(cardElement);
+  return cardElement;
 }
 
 
@@ -119,12 +119,8 @@ section.renderInitialCards();
 function saveNewCardHandler(evt) {
   evt.preventDefault();
 
-  const cardInfo = {name: placeTitle.value, link: imageURL.value};
-  
-  const newCard = new Card(cardInfo, '.card-template', handleCardClick);
-  const cardElement = newCard.createNewCard();
-
-  section.addItem(cardElement);
+  const cardInfo = {name: placeTitle.value, link: imageURL.value};  
+  section.addItem(section.renderer(cardInfo));
     
   addCardPopup.closePopup(modalAddCardType);
 }

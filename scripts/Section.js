@@ -7,16 +7,15 @@ export class Section {
 
   renderInitialCards() {
     this._items.forEach((cardItem) => {
-      this.renderer(cardItem);
+      this.addItem(this.renderer(cardItem));
     });
   }
 
   addItem(cardElement) {
-    
+
     const cardList = document.querySelector(this.containerSelector);
     cardList.prepend(cardElement);
   }
-
 }
 
 
