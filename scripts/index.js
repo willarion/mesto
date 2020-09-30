@@ -1,14 +1,13 @@
 import {Card} from './Card.js'
 import {FormValidator} from './FormValidator.js'
 import {Section} from './Section.js'
-import {Popup} from './Popup.js'
+//import {Popup} from './Popup.js'
 import {PopupWithImage} from './PopupWithImage.js'
+import {PopupWithForm} from './PopupWithForm.js'
 
 
 const editProfileBtn = document.querySelector('.profile__edit-btn');
-const modal = document.querySelector('.modal_type_edit-profile');
 
-const editProfileFormElement = document.querySelector('.modal__edit-profile-form');
 const nameInput = document.querySelector('.modal__name');
 const bioInput = document.querySelector('.modal__bio');
 const profileName = document.querySelector('.profile__name');
@@ -17,9 +16,7 @@ const profileBio = document.querySelector('.profile__bio');
 const addCardButton = document.querySelector('.profile__add-btn');
 const modalAddCardType = document.querySelector('.modal_type_add-card');
 const modalAddCardTypeSaveBtn = modalAddCardType.querySelector('.modal__save-btn');
-const placeTitle = modalAddCardType.querySelector('.modal__place-title');
-const imageURL = modalAddCardType.querySelector('.modal__image-url');
-const modalAddCardTypeForm = modalAddCardType.querySelector('.modal__container');
+
 
 
 const items = [
@@ -50,53 +47,25 @@ const items = [
 ];
 
 
-//работа модальных окон 
-const editProfilePopup = new Popup('.modal_type_edit-profile');
+//редактирование профиля
+const editProfilePopup = new PopupWithForm('.modal_type_edit-profile', (inputValues) => {
+
+  profileName.textContent = inputValues.name;
+  profileBio.textContent = inputValues.bio;
+
+  editProfilePopup.closePopup();
+});
+
 editProfilePopup.setEventListeners();
 
-const addCardPopup = new Popup('.modal_type_add-card');
-addCardPopup.setEventListeners();
 
-
-//редактирование профиля
 function editProfile() {
-  editProfilePopup.openPopup(modal);
+  editProfilePopup.openPopup();
   nameInput.value = profileName.textContent;
   bioInput.value = profileBio.textContent;
 }
 
-//работа кнопки "сохранить" для редактирования профиля
-function formSubmitHandler (evt) { 
-  evt.preventDefault(); 
-
-  profileName.textContent = nameInput.value;
-  profileBio.textContent = bioInput.value;
-
-  editProfilePopup.closePopup(modal);
-}
-
 editProfileBtn.addEventListener('click', editProfile);
-editProfileFormElement.addEventListener('submit', formSubmitHandler);
-
-
-// модалка добавления новой карточки
-addCardButton.addEventListener('click', () => {
-  addCardPopup.openPopup(modalAddCardType);
-  //отключение кнопки сохранить
-  modalAddCardType.querySelector('.modal__container').reset();
-  modalAddCardTypeSaveBtn.setAttribute('disabled', true);
-  modalAddCardTypeSaveBtn.classList.add('modal__save-btn_disabled');
-});
-
-modalAddCardTypeForm.addEventListener('submit', saveNewCardHandler);
-
-
-// открытие попапа с большой картинкой
-function handleCardClick(name, link) {
-  const bigImagePopup = new PopupWithImage(name, link, '.modal_type_big-image');
-  bigImagePopup.setEventListeners();
-  bigImagePopup.openPopup();
-}
 
 
 
@@ -115,15 +84,36 @@ function renderer(cardData) {
 const section = new Section({items, renderer}, '.elements__list');
 section.renderInitialCards();
 
+const addCardPopup = new PopupWithForm('.modal_type_add-card', (inputValues) => {
 
-function saveNewCardHandler(evt) {
-  evt.preventDefault();
-
-  const cardInfo = {name: placeTitle.value, link: imageURL.value};  
+  const cardInfo = {};
+  cardInfo.name = inputValues.title;
+  cardInfo.link = inputValues.link;
+  
   section.addItem(section.renderer(cardInfo));
     
-  addCardPopup.closePopup(modalAddCardType);
+  addCardPopup.closePopup();
+  }
+);
+
+addCardPopup.setEventListeners();
+
+// модалка добавления новой карточки
+addCardButton.addEventListener('click', () => {
+  addCardPopup.openPopup();
+  //отключение кнопки сохранить
+  modalAddCardType.querySelector('.modal__container').reset();
+  modalAddCardTypeSaveBtn.setAttribute('disabled', true);
+  modalAddCardTypeSaveBtn.classList.add('modal__save-btn_disabled');
+});
+
+// открытие попапа с большой картинкой
+function handleCardClick(name, link) {
+  const bigImagePopup = new PopupWithImage(name, link, '.modal_type_big-image');
+  bigImagePopup.setEventListeners();
+  bigImagePopup.openPopup();
 }
+
 
 
 
