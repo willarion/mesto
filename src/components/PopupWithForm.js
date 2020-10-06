@@ -4,7 +4,8 @@ export class PopupWithForm extends Popup {
 
   constructor(popupSelector, formSubmitCallback) {
     super(popupSelector);
-    this.formSubmitCallback = formSubmitCallback;
+    this._formSubmitCallback = formSubmitCallback;
+    this._popupForm = (super._getPopupElement()).querySelector('.modal__container');
   }
 
   _getInputValues() {
@@ -29,15 +30,12 @@ export class PopupWithForm extends Popup {
 
   setEventListeners() {
     super.setEventListeners(); 
-    const form = (super._getPopupElement()).querySelector('.modal__container');
     
-    form.addEventListener('submit', (evt) => {
+    this._popupForm.addEventListener('submit', (evt) => {
       evt.preventDefault();
 
-      this.formSubmitCallback(this._getInputValues());
+      this._formSubmitCallback(this._getInputValues());
     });
   }
-
-  
 
 }
