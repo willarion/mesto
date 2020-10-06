@@ -35,6 +35,8 @@ const addCardPopup = new PopupWithForm('.modal_type_add-card', (inputValues) => 
   }
 );
 
+const bigImagePopup = new PopupWithImage('.modal_type_big-image');
+
 const addCardFormValidator = new FormValidator(formSettingsObj, addCardFormSelector); 
 
 const editProfileFormValidator = new FormValidator(formSettingsObj, editProfileFormSelector); 
@@ -68,9 +70,8 @@ function renderer(cardData) {
 }
 
 function handleCardClick(name, link) {
-  const bigImagePopup = new PopupWithImage(name, link, '.modal_type_big-image');
   bigImagePopup.setEventListeners();
-  bigImagePopup.openPopup();
+  bigImagePopup.openPopup(name, link);
 }
 
 
