@@ -4,7 +4,7 @@ export class PopupWithImage extends Popup {
   
   constructor(popupSelector) {
     super(popupSelector);
-    this._bigImagePopup = super._getPopupElement();
+    this._bigImagePopup = document.querySelector(popupSelector);
     this._popupImage = this._bigImagePopup.querySelector('.modal__image');
     this._popupCaption = this._bigImagePopup.querySelector('.modal__caption');
   }

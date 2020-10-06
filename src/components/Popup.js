@@ -2,36 +2,28 @@ export class Popup {
 
   constructor(popupSelector) {
     this._popupSelector = popupSelector;
-  }
-
-  _getPopupElement() {
-    const popup = document.querySelector(this._popupSelector);
-
-    return popup;
+    this._popup = document.querySelector(this._popupSelector);
+    this._escapePopupClosing = this._escapePopupClosing.bind(this);
   }
 
   _escapePopupClosing(evt) {
     if (evt.key === "Escape") {
       this.closePopup(this._popupSelector);
-      document.removeEventListener('keydown', this._escapePopupClosing.bind(this));
     }
   }
 
   openPopup() {
-    const popup = this._getPopupElement();
-    popup.classList.add('modal_visible');
-    document.addEventListener('keydown', this._escapePopupClosing.bind(this));
+    this._popup.classList.add('modal_visible');
+    document.addEventListener('keydown', this._escapePopupClosing);
   }
 
   closePopup() {
-    const popup = this._getPopupElement();
-    popup.classList.remove('modal_visible');
+    this._popup.classList.remove('modal_visible');
+    document.removeEventListener('keydown', this._escapePopupClosing);
   }
 
   setEventListeners() {
-    const popup = this._getPopupElement(); 
-
-    popup.addEventListener('click', (evt) => {
+    this._popup.addEventListener('click', (evt) => {
       if (evt.target.classList.contains('modal') || evt.target.classList.contains('modal__reset-btn')) 
       { 
         this.closePopup(this._popupSelector);

@@ -5,11 +5,12 @@ export class PopupWithForm extends Popup {
   constructor(popupSelector, formSubmitCallback) {
     super(popupSelector);
     this._formSubmitCallback = formSubmitCallback;
-    this._popupForm = (super._getPopupElement()).querySelector('.modal__container');
+    this._popupWithForm = document.querySelector(popupSelector);
+    this._popupForm = this._popup.querySelector('.modal__container');
   }
 
   _getInputValues() {
-    const inputList = Array.from((super._getPopupElement()).querySelectorAll('.modal__input-line'));
+    const inputList = Array.from(this._popupWithForm.querySelectorAll('.modal__input-line'));
 
     const inputValues = {};
     inputList.forEach((item) => {
