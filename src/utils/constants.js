@@ -2,6 +2,8 @@ const editProfileBtn = document.querySelector('.profile__edit-btn');
 const addCardButton = document.querySelector('.profile__add-btn');
 const modalAddCardType = document.querySelector('.modal_type_add-card');
 const modalAddCardTypeSaveBtn = modalAddCardType.querySelector('.modal__save-btn');
+const addCardFormSelector = document.querySelector('.modal__add-card-form');
+const editProfileFormSelector = document.querySelector('.modal__edit-profile-form');
 
 const nameInput = document.querySelector('.modal__name');
 const bioInput = document.querySelector('.modal__bio');
@@ -38,4 +40,12 @@ const userInfoSelectors = {
   bioSelector: '.profile__bio'
 }
 
-export {editProfileBtn, addCardButton, modalAddCardType, modalAddCardTypeSaveBtn, nameInput, bioInput, items, userInfoSelectors};
+const formSettingsObj = {
+  inputSelector: '.modal__input-line',
+  submitButtonSelector: '.modal__save-btn',
+  inactiveButtonClass: 'modal__save-btn_disabled',
+  inputErrorClass: 'modal__input-line_type_error',
+  errorClass: 'modal__error_visible',
+}
+
+export {editProfileBtn, addCardButton, modalAddCardType, modalAddCardTypeSaveBtn, addCardFormSelector, editProfileFormSelector, nameInput, bioInput, items, userInfoSelectors, formSettingsObj};
