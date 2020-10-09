@@ -1,10 +1,11 @@
-import {editProfileBtn, addCardButton, modalAddCardType, modalAddCardTypeSaveBtn, addCardFormSelector, editProfileFormSelector, nameInput, bioInput, items, userInfoSelectors, formSettingsObj} from '../utils/constants'
+import {editProfileBtn, editAvatarBtn, addCardButton, modalAddCardType, modalAddCardTypeSaveBtn, addCardFormSelector, editProfileFormSelector, nameInput, bioInput, avatar, items, userInfoSelectors, formSettingsObj, editAvatarFormSelector} from '../utils/constants'
 
 import {Card} from '../components/Card.js'
 import {FormValidator} from '../components/FormValidator.js'
 import {Section} from '../components/Section.js'
 import {PopupWithImage} from '../components/PopupWithImage.js'
 import {PopupWithForm} from '../components/PopupWithForm.js'
+import {PopupWithConfirm} from '../components/PopupWithConfirm.js'
 import {UserInfo} from '../components/UserInfo.js'
 
 import './index.css';
@@ -18,6 +19,13 @@ const editProfilePopup = new PopupWithForm('.modal_type_edit-profile', (inputVal
   userInfo.setUserInfo(inputValues);
 
   editProfilePopup.closePopup();
+});
+
+const editAvatarPopup = new PopupWithForm('.modal_type_edit-avatar', (inputValues) => {
+
+  avatar.src = inputValues.link;
+
+  editAvatarPopup.closePopup();
 });
 
 const section = new Section({items, renderer}, '.elements__list');
@@ -41,15 +49,21 @@ const addCardFormValidator = new FormValidator(formSettingsObj, addCardFormSelec
 
 const editProfileFormValidator = new FormValidator(formSettingsObj, editProfileFormSelector); 
 
+const editAvatarFormValidator = new FormValidator(formSettingsObj, editAvatarFormSelector); 
+
 
 
 editProfilePopup.setEventListeners();
+
+editAvatarPopup.setEventListeners();
 
 addCardPopup.setEventListeners();
 
 addCardFormValidator.enableValidation();
 
 editProfileFormValidator.enableValidation();
+
+editAvatarFormValidator.enableValidation();
 
 
 
@@ -59,6 +73,10 @@ function editProfile() {
   const userInfoObj = userInfo.getUserInfo();
   nameInput.value = userInfoObj.name;
   bioInput.value = userInfoObj.bio;
+}
+
+function editAvatar() {
+  editAvatarPopup.openPopup();
 }
 
 function renderer(cardData) {
@@ -77,6 +95,7 @@ function handleCardClick(name, link) {
 
 
 editProfileBtn.addEventListener('click', editProfile);
+editAvatarBtn.addEventListener('click', editAvatar);
 
 addCardButton.addEventListener('click', () => {
   addCardPopup.openPopup();
