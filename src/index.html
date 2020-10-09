@@ -15,7 +15,10 @@
     <main>
       <section class="profile">
         <div class="profile__description">
-          <img src="images/avatarka.png" alt="аватар" class="profile__avatar">
+          <button class="profile__edit-avatar-btn">
+            <div class="profile__edit-btn-overlay"></div>
+            <img src="images/avatarka.png" alt="аватар" class="profile__avatar">
+          </button>
           <div class="profile__info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
             <p class="profile__bio">Исследователь океана</p>
@@ -60,8 +63,8 @@
       <fieldset class="modal__info-input">
         <legend class="modal__title">Обновить аватар</legend>
           <label class="modal__input-field">
-            <input type="url" name="link" placeholder="Ссылка на аватар" class="modal__image-url modal__input-line" id="input-image-url" required>
-            <span class="modal__error" id="input-image-url-error"></span>
+            <input type="url" name="link" placeholder="Ссылка на аватар" class="modal__avatar-url modal__input-line" id="input-avatar-url" required>
+            <span class="modal__error" id="input-avatar-url-error"></span>
           </label>
       </fieldset>
       <input type="submit" class="modal__save-btn" value="Сохранить" disabled>
