@@ -54,6 +54,20 @@
     </form>
   </div>
 
+  <div class="modal modal_type_edit-avatar">
+    <form action="#" class="modal__container modal__container_type_edit-avatar modal__edit-avatar-form" novalidate>
+      <button type="reset" class="modal__reset-btn"></button>
+      <fieldset class="modal__info-input">
+        <legend class="modal__title">Обновить аватар</legend>
+          <label class="modal__input-field">
+            <input type="url" name="link" placeholder="Ссылка на аватар" class="modal__image-url modal__input-line" id="input-image-url" required>
+            <span class="modal__error" id="input-image-url-error"></span>
+          </label>
+      </fieldset>
+      <input type="submit" class="modal__save-btn" value="Сохранить" disabled>
+    </form>
+  </div>
+
   <div class="modal modal_type_add-card">
     <form action="#" class="modal__container modal__add-card-form" novalidate>
       <button type="reset" class="modal__reset-btn"></button>
@@ -78,6 +92,14 @@
       <img src="#" alt="" class="modal__image">
       <figcaption class="modal__caption"></figcaption>
     </figure>
+  </div>
+
+  <div class="modal modal_type_delete-confirm">
+    <div class="modal__container modal__container_type_delete-confirm">
+      <button type="reset" class="modal__reset-btn"></button>
+        <p class="modal__title">Вы уверены?</p>
+      <input type="submit" class="modal__save-btn modal__btn_type_delete-confirm" value="Да" disabled>
+    </div>
   </div>
 
   <template class="card-template">
