@@ -1,6 +1,6 @@
 .modal__container {
   width: 430px;
-  height: 330px;
+  max-height: 330px;
   background-color: #fff;
   border-radius: 10px;
   color: #000;

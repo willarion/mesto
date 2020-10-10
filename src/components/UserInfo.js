@@ -18,6 +18,6 @@ export class UserInfo {
 
   setUserInfo(inputValues) {
     this._name.textContent = inputValues.name;
-    this._bio.textContent = inputValues.bio;
+    this._bio.textContent = inputValues.about;
   }
 }

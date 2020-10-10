@@ -20,8 +20,8 @@
             <img src="images/avatarka.png" alt="аватар" class="profile__avatar">
           </button>
           <div class="profile__info">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <p class="profile__bio">Исследователь океана</p>
+            <h1 class="profile__name"></h1>
+            <p class="profile__bio"></p>
             <button type="button" class="profile__edit-btn"></button>
           </div>
         </div>
@@ -49,7 +49,7 @@
             <span class="modal__error" id="input-name-error"></span>
           </label>
           <label class="modal__input-field">
-            <input type="text" name="bio" placeholder="О вас" class="modal__bio modal__input-line" id="input-bio" required minlength="2" maxlength="200">
+            <input type="text" name="about" placeholder="О вас" class="modal__bio modal__input-line" id="input-bio" required minlength="2" maxlength="200">
             <span class="modal__error" id="input-bio-error"></span>
           </label>
       </fieldset>
@@ -98,10 +98,18 @@
   </div>
 
   <div class="modal modal_type_delete-confirm">
-    <div class="modal__container modal__container_type_delete-confirm">
+    <div class="modal__container modal__container_size_xs">
       <button type="reset" class="modal__reset-btn"></button>
         <p class="modal__title">Вы уверены?</p>
-      <input type="submit" class="modal__save-btn modal__btn_type_delete-confirm" value="Да" disabled>
+      <input type="submit" class="modal__save-btn modal__save-btn_size_xs" value="Да">
+    </div>
+  </div>
+
+  <div class="modal modal_type_error-alert">
+    <div class="modal__container modal__container_size_xs">
+      <button type="reset" class="modal__reset-btn"></button>
+        <p class="modal__title">Произошла ошибка</p>
+      <input type="submit" class="modal__save-btn modal__save-btn_size_xs" value="Очень жаль :(">
     </div>
   </div>
 

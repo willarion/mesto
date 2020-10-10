@@ -1,4 +1,4 @@
-import {editProfileBtn, editAvatarBtn, addCardButton, modalAddCardType, modalAddCardTypeSaveBtn, addCardFormSelector, editProfileFormSelector, nameInput, bioInput, avatar, items, userInfoSelectors, formSettingsObj, editAvatarFormSelector} from '../utils/constants'
+import {editProfileBtn, editAvatarBtn, addCardButton, modalAddCardType, modalAddCardTypeSaveBtn, addCardFormSelector, editProfileFormSelector, nameInput, bioInput, avatar, items, userInfoSelectors, formSettingsObj, editAvatarFormSelector, apiSettings, errorText} from '../utils/constants'
 
 import {Card} from '../components/Card.js'
 import {FormValidator} from '../components/FormValidator.js'
@@ -7,8 +7,10 @@ import {PopupWithImage} from '../components/PopupWithImage.js'
 import {PopupWithForm} from '../components/PopupWithForm.js'
 import {PopupWithConfirm} from '../components/PopupWithConfirm.js'
 import {UserInfo} from '../components/UserInfo.js'
+import {Api} from '../components/Api.js'
 
 import './index.css';
+import { Popup } from '../components/Popup'
 
 
 
@@ -29,7 +31,7 @@ const editAvatarPopup = new PopupWithForm('.modal_type_edit-avatar', (inputValue
 });
 
 const section = new Section({items, renderer}, '.elements__list');
-section.renderInitialCards();
+
 
 const addCardPopup = new PopupWithForm('.modal_type_add-card', (inputValues) => {
 
@@ -51,7 +53,18 @@ const editProfileFormValidator = new FormValidator(formSettingsObj, editProfileF
 
 const editAvatarFormValidator = new FormValidator(formSettingsObj, editAvatarFormSelector); 
 
+const errorAlertPopup = new Popup('.modal_type_error-alert');
 
+const api = new Api(apiSettings, renderError);
+
+
+
+
+api.getUserInfo(setInitialUserInfo);
+
+api.getInitialCards(callbackForRenderInitialCards);
+
+errorAlertPopup.setEventListeners();
 
 editProfilePopup.setEventListeners();
 
@@ -66,6 +79,11 @@ editProfileFormValidator.enableValidation();
 editAvatarFormValidator.enableValidation();
 
 
+
+
+function callbackForRenderInitialCards(items) {
+  section.renderInitialCards(items);
+}
 
 function editProfile() {
   editProfilePopup.openPopup();
@@ -92,6 +110,17 @@ function handleCardClick(name, link) {
   bigImagePopup.openPopup(name, link);
 }
 
+function renderError(err) {
+  errorText.textContent = err;
+  errorAlertPopup.openPopup();
+}
+
+function setInitialUserInfo(obj) {
+  userInfo.setUserInfo(obj);
+  avatar.src = obj.avatar;
+}
+
+
 
 
 editProfileBtn.addEventListener('click', editProfile);
@@ -104,3 +133,12 @@ addCardButton.addEventListener('click', () => {
   modalAddCardTypeSaveBtn.setAttribute('disabled', true);
   modalAddCardTypeSaveBtn.classList.add('modal__save-btn_disabled');
 });
+
+
+
+
+
+
+
+
+
