@@ -9,6 +9,7 @@
   transition: 0.3s 0s background-image ease-in;
   background-color: transparent;
   border: none;
+  padding: 0;
 }
 
 .element__like:hover {

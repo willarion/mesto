@@ -3,6 +3,7 @@
 @import url(./__text/element__text.css);
 @import url(./__like/element__like.css);
 @import url(./__like/_is-liked/element__like_is-liked.css);
+@import url(./__like-counter/element__like-counetr.css);
 @import url(./__delete-btn/element__delete-btn.css);
 
 
