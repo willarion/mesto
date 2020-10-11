@@ -14,11 +14,20 @@ import { Popup } from '../components/Popup'
 
 
 
+const api = new Api(apiSettings, renderError);
+
+api.getUserInfo(setUserInfoFromApi);
+
+api.getInitialCards(callbackForRenderInitialCards);
+
+
 const userInfo = new UserInfo(userInfoSelectors);
 
 const editProfilePopup = new PopupWithForm('.modal_type_edit-profile', (inputValues) => {
 
-  userInfo.setUserInfo(inputValues);
+   // userInfo.setUserInfo(inputValues);
+
+api.editUserInfo(inputValues, setUserInfoFromApi)
 
   editProfilePopup.closePopup();
 });
@@ -55,14 +64,9 @@ const editAvatarFormValidator = new FormValidator(formSettingsObj, editAvatarFor
 
 const errorAlertPopup = new Popup('.modal_type_error-alert');
 
-const api = new Api(apiSettings, renderError);
 
 
 
-
-api.getUserInfo(setInitialUserInfo);
-
-api.getInitialCards(callbackForRenderInitialCards);
 
 errorAlertPopup.setEventListeners();
 
@@ -80,6 +84,11 @@ editAvatarFormValidator.enableValidation();
 
 
 
+
+function setUserInfoFromApi(obj) {
+  userInfo.setUserInfo(obj);
+  avatar.src = obj.avatar;
+}
 
 function callbackForRenderInitialCards(items) {
   section.renderInitialCards(items);
@@ -115,10 +124,6 @@ function renderError(err) {
   errorAlertPopup.openPopup();
 }
 
-function setInitialUserInfo(obj) {
-  userInfo.setUserInfo(obj);
-  avatar.src = obj.avatar;
-}
 
 
 
@@ -133,12 +138,5 @@ addCardButton.addEventListener('click', () => {
   modalAddCardTypeSaveBtn.setAttribute('disabled', true);
   modalAddCardTypeSaveBtn.classList.add('modal__save-btn_disabled');
 });
-
-
-
-
-
-
-
 
 
