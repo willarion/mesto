@@ -54,11 +54,26 @@ export class Api {
       authorization: this._authorization,
       'Content-Type': this._contentType
       },
-    body: JSON.stringify(userInfoObj)
+      body: JSON.stringify(userInfoObj)
     })
     .then((res) =>  res.json())
     .then((res) => {
     setUserInfoFromApi(res);
+    });
+  }
+
+  addNewCard(cardInfo, createNewCardFromApi) {
+    fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': this._contentType
+        },
+      body: JSON.stringify(cardInfo)
+    })
+    .then((res) =>  res.json())
+    .then((res) => {
+      createNewCardFromApi(res);
     });
   }
 

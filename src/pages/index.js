@@ -16,18 +16,11 @@ import { Popup } from '../components/Popup'
 
 const api = new Api(apiSettings, renderError);
 
-api.getUserInfo(setUserInfoFromApi);
-
-api.getInitialCards(callbackForRenderInitialCards);
-
-
 const userInfo = new UserInfo(userInfoSelectors);
 
 const editProfilePopup = new PopupWithForm('.modal_type_edit-profile', (inputValues) => {
 
-   // userInfo.setUserInfo(inputValues);
-
-api.editUserInfo(inputValues, setUserInfoFromApi)
+  api.editUserInfo(inputValues, setUserInfoFromApi)
 
   editProfilePopup.closePopup();
 });
@@ -48,7 +41,7 @@ const addCardPopup = new PopupWithForm('.modal_type_add-card', (inputValues) => 
   cardInfo.name = inputValues.title;
   cardInfo.link = inputValues.link;
   
-  section.addItem(section.renderer(cardInfo));
+  api.addNewCard(cardInfo, createNewCardFromApi);
     
   addCardPopup.closePopup();
   }
@@ -67,6 +60,9 @@ const errorAlertPopup = new Popup('.modal_type_error-alert');
 
 
 
+api.getUserInfo(setUserInfoFromApi);
+
+api.getInitialCards(callbackForRenderInitialCards);
 
 errorAlertPopup.setEventListeners();
 
@@ -85,6 +81,10 @@ editAvatarFormValidator.enableValidation();
 
 
 
+function createNewCardFromApi(obj) {
+  section.addItem(section.renderer(obj));
+}
+
 function setUserInfoFromApi(obj) {
   userInfo.setUserInfo(obj);
   avatar.src = obj.avatar;
@@ -100,7 +100,7 @@ function editProfile() {
   const userInfoObj = userInfo.getUserInfo();
   nameInput.value = userInfoObj.name;
   bioInput.value = userInfoObj.bio;
-}
+} //появление инфы о пользователе из профиля в попапе
 
 function editAvatar() {
   editAvatarPopup.openPopup();
@@ -139,4 +139,9 @@ addCardButton.addEventListener('click', () => {
   modalAddCardTypeSaveBtn.classList.add('modal__save-btn_disabled');
 });
 
+
+const obj = {
+  name: 'проверка',
+  link: 'https://www.meme-arsenal.com/memes/50569ac974c29121ff9075e45a334942.jpg'
+}
 
