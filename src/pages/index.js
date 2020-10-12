@@ -27,7 +27,8 @@ const editProfilePopup = new PopupWithForm('.modal_type_edit-profile', (inputVal
 
 const editAvatarPopup = new PopupWithForm('.modal_type_edit-avatar', (inputValues) => {
 
-  avatar.src = inputValues.link;
+  //avatar.src = inputValues.link;
+  api.editAvatar(inputValues, setAvatarFromApi)
 
   editAvatarPopup.closePopup();
 });
@@ -87,6 +88,10 @@ function createNewCardFromApi(obj) {
 
 function setUserInfoFromApi(obj) {
   userInfo.setUserInfo(obj);
+  setAvatarFromApi(obj);
+}
+
+function setAvatarFromApi(obj) {
   avatar.src = obj.avatar;
 }
 
@@ -149,7 +154,20 @@ addCardButton.addEventListener('click', () => {
 
 
 const obj = {
-  name: 'проверка',
-  link: 'https://www.meme-arsenal.com/memes/50569ac974c29121ff9075e45a334942.jpg'
+
+  avatar: 'https://i.gifer.com/origin/18/1895a75708faa00470d22b80679ada4a_w200.webp'
 }
 
+// fetch(`https://mesto.nomoreparties.co/v1/cohort-16/users/me/avatar`, {
+//   method: 'PATCH',
+//   headers: {
+//     authorization: 'fd3bf28b-131d-4028-93e3-e0966938f828',
+//     'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(obj)
+//   })
+//   .then((res) =>  res.json())
+//   .then((res) => {
+//     console.log(res);
+//     setAvatarFromApi(res);
+//   });

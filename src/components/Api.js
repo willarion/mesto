@@ -62,6 +62,21 @@ export class Api {
     });
   }
 
+  editAvatar(avatarLink, setAvatarFromApi) {
+    fetch(`${this._baseUrl}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: {
+      authorization: this._authorization,
+      'Content-Type': this._contentType
+      },
+      body: JSON.stringify(avatarLink)
+    })
+    .then((res) =>  res.json())
+    .then((res) => {
+      setAvatarFromApi(res);
+    });
+  }
+
   addNewCard(cardInfo, createNewCardFromApi) {
     fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
