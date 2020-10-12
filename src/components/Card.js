@@ -14,9 +14,13 @@ export class Card {
     return cardElement;
   }
   
-  createNewCard(){
+  createNewCard(isCardCreatedByUser){
     this._cardElement = this._getTemplate();
     this._cardImage = this._cardElement.querySelector('.element__image');
+
+    if (isCardCreatedByUser) {
+      this._cardElement.querySelector('.element__delete-btn').classList.add('element__delete-btn_visible');
+    }
 
     this._cardElement.querySelector('.element__text').textContent = this._name;
     this._cardImage.src = this._link;

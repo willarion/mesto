@@ -4,9 +4,11 @@ export class Section {
     this._cardList = document.querySelector(containerSelector);
   }
 
-  renderInitialCards(items) {
+  renderInitialCards(items, isCardCreatedByUserCheck) {
     items.forEach((cardItem) => {
-      this.addItem(this.renderer(cardItem), items);
+      if (isCardCreatedByUserCheck(cardItem))
+      {this.addItem(this.renderer(cardItem, true), items)}
+      else {this.addItem(this.renderer(cardItem), items)}
     });
   }
 

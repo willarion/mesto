@@ -82,7 +82,7 @@ editAvatarFormValidator.enableValidation();
 
 
 function createNewCardFromApi(obj) {
-  section.addItem(section.renderer(obj));
+  section.addItem(section.renderer(obj, true));
 }
 
 function setUserInfoFromApi(obj) {
@@ -90,8 +90,16 @@ function setUserInfoFromApi(obj) {
   avatar.src = obj.avatar;
 }
 
+function isCardCreatedByUserCheck(card) {
+  const userInfoObj = userInfo.getUserInfo();
+  if (card.owner.name === userInfoObj.name 
+      && card.owner.about === userInfoObj.bio) {
+        return true;
+      }
+}
+
 function callbackForRenderInitialCards(items) {
-  section.renderInitialCards(items);
+  section.renderInitialCards(items, isCardCreatedByUserCheck);
 }
 
 function editProfile() {
@@ -106,11 +114,11 @@ function editAvatar() {
   editAvatarPopup.openPopup();
 }
 
-function renderer(cardData) {
+function renderer(cardData, isCardCreatedByUser) {
 
   const newCard = new Card(cardData, '.card-template',  handleCardClick);
 
-  const cardElement = newCard.createNewCard();
+  const cardElement = newCard.createNewCard(isCardCreatedByUser);
   return cardElement;
 }
 
