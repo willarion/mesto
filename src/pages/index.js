@@ -127,7 +127,7 @@ function editAvatar() {
 
 function renderer(cardData, isCardCreatedByUser) {
 
-  const newCard = new Card(cardData, '.card-template',  handleCardClick, deleteCardCallback);
+  const newCard = new Card(cardData, '.card-template',  handleCardClick, deleteCardCallback, likeCardCallback);
 
   const cardElement = newCard.createNewCard(isCardCreatedByUser);
   return cardElement;
@@ -138,8 +138,27 @@ function deleteCardCallback(evt) {
 
   deleteConfirmPopup.getCardData(this._cardId);
   api.getCardData(this._cardId, cardElement);
-  
+
   deleteConfirmPopup.openPopup();
+}
+
+function likeCardCallback(evt) {
+  const cardElement = evt.target.closest(".card-element");
+
+  api.getCardData(this._cardId, cardElement);
+  
+  if (evt.target.classList.contains('element__like_is-liked')) 
+    { 
+      api.deleteCardLike(evt.target, showChangedLikesNumber) 
+    } 
+  else 
+    { 
+      api.putCardLike(evt.target, showChangedLikesNumber)
+    }
+}
+
+function showChangedLikesNumber(cardElement, obj) {
+  cardElement.querySelector('.element__like-counter').textContent = obj.likes.length;
 }
 
 function handleCardClick(name, link) {

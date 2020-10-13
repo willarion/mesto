@@ -1,12 +1,14 @@
 export class Card {
   
-  constructor(data, cardSelector, handleCardClick, deleteCardCallback) {
+  constructor(data, cardSelector, handleCardClick, deleteCardCallback, likeCardCallback) {
     this._name = data.name;
     this._link = data.link;
     this._cardId = data._id;
+    this._сardLikes = data.likes;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._deleteCardCallback = deleteCardCallback;
+    this._likeCardCallback = likeCardCallback;
   }
 
   _getTemplate() {
@@ -31,18 +33,17 @@ export class Card {
       this._cardImage.alt = this._name;
     } else {this._cardImage.alt = 'место';}
 
+    this._cardElement.querySelector('.element__like-counter').textContent = this._сardLikes.length;
+
     this._setEventListeners(this._cardImage);
 
     return this._cardElement;
   }
 
-  _likeCard (evt) {
-    const eventTarget = evt.target; 
-    eventTarget.classList.toggle('element__like_is-liked');
-  }
-
   _setEventListeners(image) {
-    this._cardElement.querySelector('.element__like').addEventListener('click', (evt) => {this._likeCard (evt)});
+    this._cardElement.querySelector('.element__like').addEventListener('click', (evt) => {
+      this._likeCardCallback(evt);  
+    });
 
     this._cardElement.querySelector('.element__delete-btn').addEventListener('click', (evt) => {
       this._deleteCardCallback(evt);

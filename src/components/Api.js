@@ -116,10 +116,9 @@ export class Api {
     });
   }
 
-  getCardData(cardId, cardElement, сardLikes) {
+  getCardData(cardId, cardElement) {
     this._cardId = cardId;
     this._cardElement = cardElement;
-    this._сardLikes = сardLikes;
   }
 
   deleteCard(cardId) {
@@ -144,5 +143,51 @@ export class Api {
     });
   }
 
+  putCardLike(evtTarget, showChangedLikesNumber) {
+    fetch(`${this._baseUrl}/cards/likes/${this._cardId}`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._authorization
+        }
+    })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(res.status);
+    })
+    .then((res) => {
+      console.log(res);
+      evtTarget.classList.toggle('element__like_is-liked');
+      showChangedLikesNumber(this._cardElement, res);
+    })
+    .catch((err) => {
+      this._renderError(`Ошибка: ${err}`);
+    });
+  }
+
+  deleteCardLike(evtTarget, showChangedLikesNumber) {
+    fetch(`${this._baseUrl}/cards/likes/${this._cardId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization
+        }
+    })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(res.status);
+    })
+    .then((res) => {
+      console.log(res);
+      evtTarget.classList.toggle('element__like_is-liked');
+      showChangedLikesNumber(this._cardElement, res);
+    })
+    .catch((err) => {
+      this._renderError(`Ошибка: ${err}`);
+    });
+  }
+  
 
 }
