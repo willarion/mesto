@@ -15,37 +15,33 @@ import { Popup } from '../components/Popup'
 
 
 
-const api = new Api(apiSettings, renderError);
+const api = new Api(apiSettings, renderError, renderLoading);
 
 const userInfo = new UserInfo(userInfoSelectors);
 
-const editProfilePopup = new PopupWithForm('.modal_type_edit-profile', (inputValues) => {
+const editProfilePopup = new PopupWithForm('.modal_type_edit-profile', (inputValues, submitBtn) => {
+  renderLoading(true, submitBtn);
 
-  api.editUserInfo(inputValues, setUserInfoFromApi)
-
-  editProfilePopup.closePopup();
+  api.editUserInfo(inputValues, setUserInfoFromApi, submitBtn, editProfilePopup);
 });
 
-const editAvatarPopup = new PopupWithForm('.modal_type_edit-avatar', (inputValues) => {
+const editAvatarPopup = new PopupWithForm('.modal_type_edit-avatar', (inputValues, submitBtn) => {
+  renderLoading(true, submitBtn);
 
-  api.editAvatar(inputValues, setAvatarFromApi)
-
-  editAvatarPopup.closePopup();
+  api.editAvatar(inputValues, setAvatarFromApi, submitBtn, editAvatarPopup);
 });
 
 const section = new Section({items, renderer}, '.elements__list');
 
-const addCardPopup = new PopupWithForm('.modal_type_add-card', (inputValues) => {
+const addCardPopup = new PopupWithForm('.modal_type_add-card', (inputValues, submitBtn) => {
+  renderLoading(true, submitBtn);
 
   const cardInfo = {};
   cardInfo.name = inputValues.title;
   cardInfo.link = inputValues.link;
   
-  api.addNewCard(cardInfo, createNewCardFromApi);
-    
-  addCardPopup.closePopup();
-  }
-);
+  api.addNewCard(cardInfo, createNewCardFromApi, submitBtn, addCardPopup);   
+});
 
 const bigImagePopup = new PopupWithImage('.modal_type_big-image');
 
@@ -113,7 +109,7 @@ function callbackForRenderInitialCards(items) {
 }
 
 function editProfile() {
-  editProfilePopup.openPopup();
+  editProfilePopup.openPopup('Сохранить');
 
   const userInfoObj = userInfo.getUserInfo();
   nameInput.value = userInfoObj.name;
@@ -121,7 +117,7 @@ function editProfile() {
 } //появление инфы о пользователе из профиля в попапе
 
 function editAvatar() {
-  editAvatarPopup.openPopup();
+  editAvatarPopup.openPopup('Сохранить');
 }
 
 function renderer(cardData, isCardCreatedByUser) {
@@ -137,7 +133,7 @@ function deleteCardCallback(evt) {
 
   api.getCardData(this._cardId, cardElement);
 
-  deleteConfirmPopup.openPopup();
+  deleteConfirmPopup.openPopup('Да');
 }
 
 function likeCardCallback(evt) {
@@ -164,6 +160,14 @@ function handleCardClick(name, link) {
   bigImagePopup.openPopup(name, link);
 }
 
+function renderLoading(isLoading, submitBtn, popupType) {
+  if (isLoading) {
+    submitBtn.value = 'Сохранение...';
+  } else {
+    popupType.closePopup();
+  }
+}
+
 function renderError(err) {
   errorText.textContent = err;
   errorAlertPopup.openPopup();
@@ -176,15 +180,10 @@ editProfileBtn.addEventListener('click', editProfile);
 editAvatarBtn.addEventListener('click', editAvatar);
 
 addCardButton.addEventListener('click', () => {
-  addCardPopup.openPopup();
+  addCardPopup.openPopup('Создать');
   //отключение кнопки сохранить
   modalAddCardType.querySelector('.modal__container').reset();
   modalAddCardTypeSaveBtn.setAttribute('disabled', true);
   modalAddCardTypeSaveBtn.classList.add('modal__save-btn_disabled');
 });
-
-
-
-
-
 

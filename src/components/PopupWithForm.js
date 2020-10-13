@@ -6,6 +6,7 @@ export class PopupWithForm extends Popup {
     super(popupSelector);
     this._formSubmitCallback = formSubmitCallback;
     this._popupWithForm = document.querySelector(popupSelector);
+    this._submitBtn = this._popupWithForm.querySelector('.modal__save-btn');
     this._popupForm = this._popup.querySelector('.modal__container');
   }
 
@@ -18,6 +19,11 @@ export class PopupWithForm extends Popup {
       return inputValues;
     });
     return inputValues;
+  }
+
+  openPopup(submitBtnValue) {
+    this._submitBtn.value = submitBtnValue;
+    super.openPopup();
   }
 
   closePopup() {
@@ -35,7 +41,7 @@ export class PopupWithForm extends Popup {
     this._popupForm.addEventListener('submit', (evt) => {
       evt.preventDefault();
 
-      this._formSubmitCallback(this._getInputValues());
+      this._formSubmitCallback(this._getInputValues(), this._submitBtn);
     });
   }
 

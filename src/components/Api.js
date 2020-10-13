@@ -1,10 +1,11 @@
 export class Api {
   
-  constructor(options, renderError) {
+  constructor(options, renderError, renderLoading) {
     this._baseUrl = options.baseUrl;
     this._authorization = options.headers.authorization; 
     this._contentType = options.headers["Content-Type"];
     this._renderError = renderError; 
+    this._renderLoading = renderLoading;
   }
 
   getUserInfo(setInitialUserInfo) {
@@ -47,7 +48,7 @@ export class Api {
     });
   }
 
-  editUserInfo(userInfoObj, setUserInfoFromApi) {
+  editUserInfo(userInfoObj, setUserInfoFromApi, submitBtn, editProfilePopup) {
     fetch(`${this._baseUrl}/users/me`, {
     method: 'PATCH',
     headers: {
@@ -67,10 +68,11 @@ export class Api {
     })
     .catch((err) => {
       this._renderError(`Ошибка: ${err}`);
-    });
+    })
+    .finally(this._renderLoading(false, submitBtn, editProfilePopup));
   }
 
-  editAvatar(avatarLink, setAvatarFromApi) {
+  editAvatar(avatarLink, setAvatarFromApi, submitBtn, editAvatarPopup) {
     fetch(`${this._baseUrl}/users/me/avatar`, {
     method: 'PATCH',
     headers: {
@@ -90,10 +92,11 @@ export class Api {
     })
     .catch((err) => {
       this._renderError(`Ошибка: ${err}`);
-    });
+    })
+    .finally(this._renderLoading(false, submitBtn, editAvatarPopup));
   }
 
-  addNewCard(cardInfo, createNewCardFromApi) {
+  addNewCard(cardInfo, createNewCardFromApi, submitBtn, addCardPopup) {
     fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: {
@@ -113,7 +116,8 @@ export class Api {
     })
     .catch((err) => {
       this._renderError(`Ошибка: ${err}`);
-    });
+    })
+    .finally(this._renderLoading(false, submitBtn, addCardPopup));
   }
 
   getCardData(cardId, cardElement) {
@@ -157,7 +161,6 @@ export class Api {
       return Promise.reject(res.status);
     })
     .then((res) => {
-      console.log(res);
       evtTarget.classList.toggle('element__like_is-liked');
       showChangedLikesNumber(this._cardElement, res);
     })
@@ -180,7 +183,6 @@ export class Api {
       return Promise.reject(res.status);
     })
     .then((res) => {
-      console.log(res);
       evtTarget.classList.toggle('element__like_is-liked');
       showChangedLikesNumber(this._cardElement, res);
     })
