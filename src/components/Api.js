@@ -44,7 +44,7 @@ export class Api {
     })
     .catch((err) => {
       this._renderError(`Ошибка: ${err}`);
-    }); 
+    });
   }
 
   editUserInfo(userInfoObj, setUserInfoFromApi) {
@@ -56,9 +56,17 @@ export class Api {
       },
       body: JSON.stringify(userInfoObj)
     })
-    .then((res) =>  res.json())
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(res.status);
+    })
     .then((res) => {
     setUserInfoFromApi(res);
+    })
+    .catch((err) => {
+      this._renderError(`Ошибка: ${err}`);
     });
   }
 
@@ -71,9 +79,17 @@ export class Api {
       },
       body: JSON.stringify(avatarLink)
     })
-    .then((res) =>  res.json())
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(res.status);
+    })
     .then((res) => {
       setAvatarFromApi(res);
+    })
+    .catch((err) => {
+      this._renderError(`Ошибка: ${err}`);
     });
   }
 
@@ -86,10 +102,47 @@ export class Api {
         },
       body: JSON.stringify(cardInfo)
     })
-    .then((res) =>  res.json())
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(res.status);
+    })
     .then((res) => {
       createNewCardFromApi(res);
+    })
+    .catch((err) => {
+      this._renderError(`Ошибка: ${err}`);
     });
   }
+
+  getCardData(cardId, cardElement, сardLikes) {
+    this._cardId = cardId;
+    this._cardElement = cardElement;
+    this._сardLikes = сardLikes;
+  }
+
+  deleteCard(cardId) {
+    fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization
+        }
+    })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(res.status);
+    })
+    .then((res) => {
+      console.log(res);
+      this._cardElement.remove();
+    })
+    .catch((err) => {
+      this._renderError(`Ошибка: ${err}`);
+    });
+  }
+
 
 }

@@ -58,8 +58,14 @@ const editAvatarFormValidator = new FormValidator(formSettingsObj, editAvatarFor
 
 const errorAlertPopup = new Popup('.modal_type_error-alert');
 
+const deleteConfirmPopup = new PopupWithConfirm('.modal_type_delete-confirm', (cardId) => {
+  api.deleteCard(cardId);
+});
 
 
+
+
+deleteConfirmPopup.setEventListeners();
 
 api.getUserInfo(setUserInfoFromApi);
 
@@ -121,10 +127,19 @@ function editAvatar() {
 
 function renderer(cardData, isCardCreatedByUser) {
 
-  const newCard = new Card(cardData, '.card-template',  handleCardClick);
+  const newCard = new Card(cardData, '.card-template',  handleCardClick, deleteCardCallback);
 
   const cardElement = newCard.createNewCard(isCardCreatedByUser);
   return cardElement;
+}
+
+function deleteCardCallback(evt) {
+  const cardElement = evt.target.closest(".card-element");
+
+  deleteConfirmPopup.getCardData(this._cardId);
+  api.getCardData(this._cardId, cardElement);
+  
+  deleteConfirmPopup.openPopup();
 }
 
 function handleCardClick(name, link) {
@@ -153,21 +168,7 @@ addCardButton.addEventListener('click', () => {
 });
 
 
-const obj = {
 
-  avatar: 'https://i.gifer.com/origin/18/1895a75708faa00470d22b80679ada4a_w200.webp'
-}
 
-// fetch(`https://mesto.nomoreparties.co/v1/cohort-16/users/me/avatar`, {
-//   method: 'PATCH',
-//   headers: {
-//     authorization: 'fd3bf28b-131d-4028-93e3-e0966938f828',
-//     'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(obj)
-//   })
-//   .then((res) =>  res.json())
-//   .then((res) => {
-//     console.log(res);
-//     setAvatarFromApi(res);
-//   });
+
+
