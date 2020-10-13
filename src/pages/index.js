@@ -14,6 +14,7 @@ import { Popup } from '../components/Popup'
 
 
 
+
 const api = new Api(apiSettings, renderError);
 
 const userInfo = new UserInfo(userInfoSelectors);
@@ -27,14 +28,12 @@ const editProfilePopup = new PopupWithForm('.modal_type_edit-profile', (inputVal
 
 const editAvatarPopup = new PopupWithForm('.modal_type_edit-avatar', (inputValues) => {
 
-  //avatar.src = inputValues.link;
   api.editAvatar(inputValues, setAvatarFromApi)
 
   editAvatarPopup.closePopup();
 });
 
 const section = new Section({items, renderer}, '.elements__list');
-
 
 const addCardPopup = new PopupWithForm('.modal_type_add-card', (inputValues) => {
 
@@ -58,8 +57,8 @@ const editAvatarFormValidator = new FormValidator(formSettingsObj, editAvatarFor
 
 const errorAlertPopup = new Popup('.modal_type_error-alert');
 
-const deleteConfirmPopup = new PopupWithConfirm('.modal_type_delete-confirm', (cardId) => {
-  api.deleteCard(cardId);
+const deleteConfirmPopup = new PopupWithConfirm('.modal_type_delete-confirm', () => {
+  api.deleteCard();
 });
 
 
@@ -136,7 +135,6 @@ function renderer(cardData, isCardCreatedByUser) {
 function deleteCardCallback(evt) {
   const cardElement = evt.target.closest(".card-element");
 
-  deleteConfirmPopup.getCardData(this._cardId);
   api.getCardData(this._cardId, cardElement);
 
   deleteConfirmPopup.openPopup();
@@ -170,7 +168,6 @@ function renderError(err) {
   errorText.textContent = err;
   errorAlertPopup.openPopup();
 }
-
 
 
 

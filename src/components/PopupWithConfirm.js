@@ -8,18 +8,13 @@ export class PopupWithConfirm extends Popup {
     this._popupBtn= document.querySelector(popupSelector).querySelector('.modal__save-btn');
   }
 
-  getCardData(cardId, cardElement) {
-    this._cardId = cardId;
-    this._cardElement = cardElement;
-  }
-
   setEventListeners() {
     super.setEventListeners(); 
     
     this._popupBtn.addEventListener('click', (evt) => {
       evt.preventDefault();
 
-      this._confirmSubmitCallback(this._cardId);
+      this._confirmSubmitCallback();
       
       super.closePopup();
     });

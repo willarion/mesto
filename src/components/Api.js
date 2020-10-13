@@ -121,8 +121,8 @@ export class Api {
     this._cardElement = cardElement;
   }
 
-  deleteCard(cardId) {
-    fetch(`${this._baseUrl}/cards/${cardId}`, {
+  deleteCard() {
+    fetch(`${this._baseUrl}/cards/${this._cardId}`, {
       method: 'DELETE',
       headers: {
         authorization: this._authorization
