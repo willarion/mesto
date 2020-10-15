@@ -8,18 +8,20 @@ export class Api {
     this._renderLoading = renderLoading;
   }
 
+  _handleOriginalResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(res.status);
+  }
+
   getUserInfo(setInitialUserInfo) {
     fetch(`${this._baseUrl}/users/me`, {
       headers: {
         authorization: this._authorization
         }
     })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    })
+    .then(this._handleOriginalResponse)
     .then((res) => {
       setInitialUserInfo(res);
     })
@@ -34,12 +36,7 @@ export class Api {
         authorization: this._authorization
         }
     })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    })
+    .then(this._handleOriginalResponse)
     .then((res) => {
       callbackForRenderInitialCards(res);
     })
@@ -57,12 +54,7 @@ export class Api {
       },
       body: JSON.stringify(userInfoObj)
     })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    })
+    .then(this._handleOriginalResponse)
     .then((res) => {
     setUserInfoFromApi(res);
     })
@@ -81,12 +73,7 @@ export class Api {
       },
       body: JSON.stringify(avatarLink)
     })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    })
+    .then(this._handleOriginalResponse)
     .then((res) => {
       setAvatarFromApi(res);
     })
@@ -105,12 +92,7 @@ export class Api {
         },
       body: JSON.stringify(cardInfo)
     })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    })
+    .then(this._handleOriginalResponse)
     .then((res) => {
       createNewCardFromApi(res);
     })
@@ -132,12 +114,7 @@ export class Api {
         authorization: this._authorization
         }
     })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    })
+    .then(this._handleOriginalResponse)
     .then((res) => {
       console.log(res);
       this._cardElement.remove();
@@ -155,12 +132,7 @@ export class Api {
         authorization: this._authorization
         }
     })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    })
+    .then(this._handleOriginalResponse)
     .then((res) => {
       evtTarget.classList.toggle('element__like_is-liked');
       showChangedLikesNumber(this._cardElement, res);
@@ -177,12 +149,7 @@ export class Api {
         authorization: this._authorization
         }
     })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    })
+    .then(this._handleOriginalResponse)
     .then((res) => {
       evtTarget.classList.toggle('element__like_is-liked');
       showChangedLikesNumber(this._cardElement, res);
