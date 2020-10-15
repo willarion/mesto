@@ -119,10 +119,9 @@ function editAvatar() {
 }
 
 function renderer(cardData, isCardCreatedByUser) {
-  
-  const newCard = new Card(cardData, '.card-template',  handleCardClick, deleteCardCallback, likeCardCallback);
-
   const userInfoObj = userInfo.getUserInfo();
+
+  const newCard = new Card(cardData, '.card-template',  handleCardClick, deleteCardCallback, likeCardCallback);
 
   const cardElement = newCard.createNewCard(isCardCreatedByUser, userInfoObj);
   return cardElement;

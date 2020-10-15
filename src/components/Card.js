@@ -35,6 +35,16 @@ export class Card {
 
     this._cardElement.querySelector('.element__like-counter').textContent = this._сardLikes.length;
 
+    const name = userInfoObj.name;
+    const about = userInfoObj.bio;
+
+    const likedByUser = this._сardLikes.find((like) => 
+    like.name === name && like.about === about);
+
+    if (likedByUser !== undefined) {
+      this._cardElement.querySelector('.element__like').classList.add('element__like_is-liked');
+    }
+
     this._setEventListeners(this._cardImage);
 
     return this._cardElement;
