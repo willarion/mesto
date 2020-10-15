@@ -125,7 +125,7 @@ export class Api {
     this._cardElement = cardElement;
   }
 
-  deleteCard() {
+  deleteCard(closeConfirmPopup) {
     fetch(`${this._baseUrl}/cards/${this._cardId}`, {
       method: 'DELETE',
       headers: {
@@ -144,7 +144,8 @@ export class Api {
     })
     .catch((err) => {
       this._renderError(`Ошибка: ${err}`);
-    });
+    })
+    .finally(closeConfirmPopup);
   }
 
   putCardLike(evtTarget, showChangedLikesNumber) {

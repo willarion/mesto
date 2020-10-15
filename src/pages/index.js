@@ -54,7 +54,7 @@ const editAvatarFormValidator = new FormValidator(formSettingsObj, editAvatarFor
 const errorAlertPopup = new Popup('.modal_type_error-alert');
 
 const deleteConfirmPopup = new PopupWithConfirm('.modal_type_delete-confirm', () => {
-  api.deleteCard();
+  api.deleteCard(deleteConfirmPopup.closePopup());
 });
 
 

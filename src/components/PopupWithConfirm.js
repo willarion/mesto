@@ -20,8 +20,6 @@ export class PopupWithConfirm extends Popup {
       evt.preventDefault();
 
       this._confirmSubmitCallback();
-      
-      super.closePopup();
     });
   }
 }
