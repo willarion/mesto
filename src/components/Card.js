@@ -18,7 +18,7 @@ export class Card {
     return cardElement;
   }
   
-  createNewCard(isCardCreatedByUser){
+  createNewCard(isCardCreatedByUser, userInfoObj){
     this._cardElement = this._getTemplate();
     this._cardImage = this._cardElement.querySelector('.element__image');
 
