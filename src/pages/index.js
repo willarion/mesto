@@ -119,10 +119,12 @@ function editAvatar() {
 }
 
 function renderer(cardData, isCardCreatedByUser) {
-
+  
   const newCard = new Card(cardData, '.card-template',  handleCardClick, deleteCardCallback, likeCardCallback);
 
-  const cardElement = newCard.createNewCard(isCardCreatedByUser);
+  const userInfoObj = userInfo.getUserInfo();
+
+  const cardElement = newCard.createNewCard(isCardCreatedByUser, userInfoObj);
   return cardElement;
 }
 
@@ -137,19 +139,32 @@ function deleteCardCallback(evt) {
 function likeCardCallback(evt) {
   const cardElement = evt.target.closest(".card-element");
 
-  api.getCardData(this._cardId, cardElement);
+  api.getCardData(this._cardId);
   
   if (evt.target.classList.contains('element__like_is-liked')) 
     { 
-      api.deleteCardLike(evt.target, showChangedLikesNumber) 
+      api.deleteCardLike()
+      .then((res) => {
+          showChangedLikesNumber(cardElement, res, evt.target);
+      })
+      .catch((err) => {
+        renderError(`Ошибка: ${err}`);
+      });
     } 
   else 
     { 
-      api.putCardLike(evt.target, showChangedLikesNumber)
+      api.putCardLike()
+      .then((res) => {
+        showChangedLikesNumber(cardElement, res, evt.target);
+    })
+    .catch((err) => {
+      renderError(`Ошибка: ${err}`);
+    });
     }
 }
 
-function showChangedLikesNumber(cardElement, obj) {
+function showChangedLikesNumber(cardElement, obj, evtTarget) {
+  evtTarget.classList.toggle('element__like_is-liked');
   cardElement.querySelector('.element__like-counter').textContent = obj.likes.length;
 }
 

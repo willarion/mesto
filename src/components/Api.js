@@ -127,39 +127,24 @@ export class Api {
     .finally(closeConfirmPopup);
   }
 
-  putCardLike(evtTarget, showChangedLikesNumber) {
-    fetch(`${this._baseUrl}/cards/likes/${this._cardId}`, {
+  putCardLike() {
+    return fetch(`${this._baseUrl}/cards/likes/${this._cardId}`, {
       method: 'PUT',
       headers: {
         authorization: this._authorization
         }
     })
-    .then(this._handleOriginalResponse)
-    .then((res) => {
-      evtTarget.classList.toggle('element__like_is-liked');
-      showChangedLikesNumber(this._cardElement, res);
-    })
-    .catch((err) => {
-      this._renderError(`Ошибка: ${err}`);
-    });
+    .then(this._handleOriginalResponse);
   }
 
-  deleteCardLike(evtTarget, showChangedLikesNumber) {
-    fetch(`${this._baseUrl}/cards/likes/${this._cardId}`, {
+  deleteCardLike() {
+    return fetch(`${this._baseUrl}/cards/likes/${this._cardId}`, {
       method: 'DELETE',
       headers: {
         authorization: this._authorization
         }
     })
-    .then(this._handleOriginalResponse)
-    .then((res) => {
-      evtTarget.classList.toggle('element__like_is-liked');
-      showChangedLikesNumber(this._cardElement, res);
-    })
-    .catch((err) => {
-      this._renderError(`Ошибка: ${err}`);
-    });
+    .then(this._handleOriginalResponse);
   }
   
-
 }
