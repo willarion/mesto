@@ -15,34 +15,36 @@ export class Api {
     return Promise.reject(res.status);
   }
 
-  getUserInfo(setInitialUserInfo) {
-    fetch(`${this._baseUrl}/users/me`, {
+  getUserInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
       headers: {
         authorization: this._authorization
         }
     })
-    .then(this._handleOriginalResponse)
-    .then((res) => {
-      setInitialUserInfo(res);
-    })
-    .catch((err) => {
-      this._renderError(`Ошибка: ${err}`);
-    }); 
+    .then(this._handleOriginalResponse);
   }
 
-  getInitialCards(callbackForRenderInitialCards) {
-    fetch(`${this._baseUrl}/cards`, {
+  _getInitialCards() {
+    return fetch(`${this._baseUrl}/cards`, {
       headers: {
         authorization: this._authorization
         }
     })
-    .then(this._handleOriginalResponse)
-    .then((res) => {
-      callbackForRenderInitialCards(res);
-    })
-    .catch((err) => {
-      this._renderError(`Ошибка: ${err}`);
-    });
+    .then(this._handleOriginalResponse);
+  }
+
+  renderInitialPage(setInitialUserInfo, callbackForRenderInitialCards) {
+    Promise.all([
+      this.getUserInfo(),
+      this._getInitialCards(),
+    ])
+      .then(([userData, initialCards]) => {
+        setInitialUserInfo(userData);
+        callbackForRenderInitialCards(initialCards);
+      })
+      .catch((err) => {
+        this._renderError(`Ошибка: ${err}`);
+      }); 
   }
 
   editUserInfo(userInfoObj, setUserInfoFromApi, submitBtn, editProfilePopup) {

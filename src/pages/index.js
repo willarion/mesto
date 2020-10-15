@@ -62,9 +62,7 @@ const deleteConfirmPopup = new PopupWithConfirm('.modal_type_delete-confirm', ()
 
 deleteConfirmPopup.setEventListeners();
 
-api.getUserInfo(setUserInfoFromApi);
-
-api.getInitialCards(callbackForRenderInitialCards);
+api.renderInitialPage(setUserInfoFromApi, callbackForRenderInitialCards);
 
 errorAlertPopup.setEventListeners();
 
